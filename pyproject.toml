@@ -1,0 +1,18 @@
+[project]
+name = "galaxyharvester"
+version = "0.1.0"
+description = "Galaxy Harvester was created in March of 2010 to provide an easy to use web application where game resource information can be tracked."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "jinja2>=3.1.4",
+    "pillow>=10.4.0",
+    "pymysql>=1.1.1",
+    "requests>=2.32.3",
+]
+
+[tool.uv]
+dev-dependencies = [
+    "nose-cov>=1.6",
+    "nose>=1.3.7",
+]
