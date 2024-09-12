@@ -1,4 +1,6 @@
-DB_HOST = "localhost"
+import os
+
+DB_HOST = os.getenv("DB_HOST", "galaxyharvester-db")
 DB_USER = "webusr"
 DB_PASS = ""
 DB_NAME = "swgresource"

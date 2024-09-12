@@ -7,16 +7,13 @@ services:
       - "8888:80"
     build:
       dockerfile: ./Dockerfile
+    environment: 
+      - DB_HOST=galaxyharvester-db
     links:
       - "db"
-    develop:
-      watch:
-        - action: sync
-          path: ./html
-          target: /var/www/html
   db:
     container_name: galaxyharvester-db
-    image: mysql:5.7.11
+    image: mariadb:latest
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: 'password'
