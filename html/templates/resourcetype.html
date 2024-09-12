@@ -1,7 +1,7 @@
 {% import 'blocks.html' as blocks %}
 <!DOCTYPE html><html lang="en">
 <head><title>Resource - Galaxy Harvester</title>
-{{ blocks.commonResources(uiTheme, enableCAPTCHA) }}
+{{ blocks.commonResources(uiTheme) }}
 <script type="text/javascript">
 function refreshCreatureData() {
   $("#resCreatures").load(BASE_SCRIPT_URL + "getCreatureList.py",{
@@ -129,7 +129,7 @@ $(document).ready(function() {
 </div>
 {{ blocks.pageFooter() }}
 {{ blocks.resourceForm() }}
-{{ blocks.joinForm(loggedin, ['?src_url={{ BASE_SCRIPT_URL }}resource.py&', linkappend]|join, url, enableCAPTCHA, siteidCAPTCHA) }}
+{{ blocks.joinForm(loggedin, ['?src_url={{ BASE_SCRIPT_URL }}resource.py&', linkappend]|join, url) }}
 {% if loggedin != 0 %}
 	<div id="creatureDialog" class="window">
 	    <form name="addcreatureform">

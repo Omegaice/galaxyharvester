@@ -4,10 +4,10 @@
 <head><title>Recipe - Galaxy Harvester</title>
 <meta name="description" content="Tool for tracking resources spawning in galaxies of the MMO game Star Wars Galaxies that are emulating original game functionality." />
 <meta name="keywords" content="SWGEmu, crafting, resources, star wars galaxies, harvester" />
-<link rel="SHORTCUT ICON" href="favicon.ico"/>
-{{ blocks.commonResources(uiTheme, enableCAPTCHA) }}
-<script src="/js/jquery-ui-1.8.20.custom.min.js"></script>
-<script src="/js/Colors.js"></script>
+<link rel="SHORTCUT ICON" href="/static/images/favicon.ico"/>
+{{ blocks.commonResources(uiTheme) }}
+<script src="/static/js/jquery-ui-1.8.20.custom.min.js"></script>
+<script src="/static/js/Colors.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
     $("#galaxySel").val(getCookie("galaxy",defaultGalaxy));
@@ -90,7 +90,7 @@ function refreshSuggestions() {
     if ($("#profSelSuggest").val() == 0) {
         $("#recipeSuggestList").html("<div class='disabledDark'>Select a profession above to get recipe suggestions based on your inventory.</div>");
     } else {
-        $("#recipeSuggestList").html("<div style='width:100%;float:right;align:center;'><div style='font-size:16px;font-weight:bolder;margin:10px;'>Trying to find something good to make with your inventory.  This may take a while...</div><img src='/images/ghWaitBlue256.gif' /></div>");
+        $("#recipeSuggestList").html("<div style='width:100%;float:right;align:center;'><div style='font-size:16px;font-weight:bolder;margin:10px;'>Trying to find something good to make with your inventory.  This may take a while...</div><img src='/static/images/ghWaitBlue256.gif' /></div>");
         $("#recipeSuggestList").load(BASE_SCRIPT_URL + "getRecipeList.py",{
             listFormat: "table",
             listType: "suggest",
@@ -343,7 +343,7 @@ function slotHoverCheck(e) {
 	  </div>
 	  <div class="ghCol" style="width:40%;min-width:330px;">
 	    <div id="schematicSummary" class="ghWidgetBox">
-        <img src="/images/schematics/{{ schemImageName }}" class="schematics" />
+        <img src="/static/images/schematics/{{ schemImageName }}" class="schematics" />
 	    </div>
 	    <div id="schematicDetails" class="ghWidgetBox">
 	      <div class="boxHeader">Schematic Details</div>
@@ -356,7 +356,7 @@ function slotHoverCheck(e) {
 {% if loggedin == 1 %}
 	{{ blocks.recipeForm(professionList) }}
 {% endif %}
-{{ blocks.joinForm(loggedin, ['?src_url=recipe.py&', linkappend]|join, url, enableCAPTCHA, siteidCAPTCHA) }}
+{{ blocks.joinForm(loggedin, ['?src_url=recipe.py&', linkappend]|join, url) }}
 <div id="tooltip"></div>
 <div id="mask"></div>
 </body></html>

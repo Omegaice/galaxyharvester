@@ -1,7 +1,7 @@
 {% import 'blocks.html' as blocks %}
 <!DOCTYPE html>
 <html lang="en"><head><title>Schematics - Galaxy Harvester</title>
-{{ blocks.commonResources(uiTheme, enableCAPTCHA) }}
+{{ blocks.commonResources(uiTheme) }}
 <script type="text/javascript">
 $(document).ready(function() {
     $("#galaxySel").val(getCookie("galaxy",defaultGalaxy));
@@ -309,7 +309,7 @@ function deleteSchematic() {
     {% if loggedin == 1 %}
         {{ favHTML }}
         {% if canEdit %}
-          <div class="inlineBlock" style="width:3%;float:left;"><a alt="Edit Schematic" title="Edit Schematic" style="cursor: pointer;" onclick="document.location.href='?forceOp=edit'"><img src="/images/editBlue16.png" /></a></div>
+          <div class="inlineBlock" style="width:3%;float:left;"><a alt="Edit Schematic" title="Edit Schematic" style="cursor: pointer;" onclick="document.location.href='?forceOp=edit'"><img src="/static/images/editBlue16.png" /></a></div>
           <div style="float:right;">
             <button type=button value="Delete Schematic" class="ghButton" onclick="deleteSchematic();">Delete Schematic</button>
           </div>
@@ -341,7 +341,7 @@ function deleteSchematic() {
             {% endfor %}
         {% endfor %}
         </ul></td>
-        <td valign="top" width="325px"><img src="/images/schematics/{{ schematic.schematicImage }}" class="schematics" />
+        <td valign="top" width="325px"><img src="/static/images/schematics/{{ schematic.schematicImage }}" class="schematics" />
         <div id="udInfo">{{ schemImageAttempt }}</div>
       {% if loggedin == 1 %}
         <form enctype="multipart/form-data" name="udImageForm" method="post" action="{{ BASE_SCRIPT_URL }}udSchematicImage.py">
@@ -402,7 +402,7 @@ function deleteSchematic() {
 	      <div><select id="tabSelRes" onchange="setCookie('schemTabSelRes',this.value,7);getTypeRes();"><option value="">Select Crafting Tab</option>
 	{{ schematicTabList }}
 	      </select>
-	      <img src="/images/rightArrowGrey16.png" style="vertical-align:-4px;" /><select id="objectTypeSel" onchange="setCookie('schemTypeSelRes',this.value,7);getTypeRes();"><option value="">Any</option>
+	      <img src="/static/images/rightArrowGrey16.png" style="vertical-align:-4px;" /><select id="objectTypeSel" onchange="setCookie('schemTypeSelRes',this.value,7);getTypeRes();"><option value="">Any</option>
 	{{ objectTypeList }}
 	      </select>
         </div>
@@ -414,7 +414,7 @@ function deleteSchematic() {
   </div>
 </div>
 {{ blocks.pageFooter() }}
-{{ blocks.joinForm(loggedin, ['?src_url={{ BASE_SCRIPT_URL }}schematics.py&', linkappend]|join, url, enableCAPTCHA, siteidCAPTCHA) }}
+{{ blocks.joinForm(loggedin, ['?src_url={{ BASE_SCRIPT_URL }}schematics.py&', linkappend]|join, url) }}
 <div id="schematicDialog" class="window">
   <h2 style="display: inline;">New Schematic</h2><div style="float: right;position: relative;top:0px;"><a href="#" class="close">Close</a></div>
   <form name="postschemform" method="post" action="{{ BASE_SCRIPT_URL }}postSchematic.py" enctype="multipart/form-data">

@@ -1,7 +1,7 @@
 {% import 'blocks.html' as blocks %}
 <!DOCTYPE html>
 <html lang="en"><head><title>Survey - Galaxy Harvester</title>
-{{ blocks.commonResources(uiTheme, enableCAPTCHA) }}
+{{ blocks.commonResources(uiTheme) }}
 <script type="text/javascript">
 var surveyPlanet = "corellia";
 var surveyTool = "gas";
@@ -103,7 +103,7 @@ function loadPlanetButtons(galaxy) {
       for (var i=0;i<$(planetIds).find('item').length;i++) {
           var planetName = $(planetNames).find('item').eq(i).text();
           var planetShort = planetName.replace(' ', '');
-          var planetButton = $('<div id="btn' + planetShort + '" class="planetButton inlineBlock"><img src="/images/planets/icon' + planetShort + '.png" title="' + planetName + '" alt="' + planetName + '" /><br />' + planetName + '</div>');
+          var planetButton = $('<div id="btn' + planetShort + '" class="planetButton inlineBlock"><img src="/static/images/planets/icon' + planetShort + '.png" title="' + planetName + '" alt="' + planetName + '" /><br />' + planetName + '</div>');
           $(planetButton).click(function(e) {
             surveyPlanet = this.id.substr(3);
             selectPlanet(surveyPlanet);
@@ -134,14 +134,14 @@ function confirmSurvey() {
       <div class="footer"></div>
       <div class="boxHeader">Select Survey Tool</div>
       <div style="text-align:center">
-        <div id="btnchemical" class="surveyToolButton inlineBlock"><img src="/images/tools/chemicalSurveyTool.png" title="Chemical" alt="Chemical Survey Tool" /><br />Chemical</div>
-        <div id="btngas" class="surveyToolButton inlineBlock"><img src="/images/tools/gasSurveyTool.png" title="Gas" alt="Gas Survey Tool" /><br />Gas</div>
-        <div id="btnflora_resources" class="surveyToolButton inlineBlock"><img src="/images/tools/flora_resourcesSurveyTool.png" title="Flora" alt="Flora Survey Tool" /><br />Flora</div>
-        <div id="btnmineral" class="surveyToolButton inlineBlock"><img src="/images/tools/mineralSurveyTool.png" title="Mineral" alt="Mineral Survey Tool" /><br />Mineral</div>
-        <div id="btnenergy_renewable_unlimited_solar" class="surveyToolButton inlineBlock"><img src="/images/tools/energy_renewable_unlimited_solarSurveyTool.png" title="Solar" alt="Solar Survey Tool" /><br />Solar</div>
-        <div id="btnwater" class="surveyToolButton inlineBlock"><img src="/images/tools/waterSurveyTool.png" title="Water" alt="Water Survey Tool" /><br />Water</div>
-        <div id="btnenergy_renewable_unlimited_wind" class="surveyToolButton inlineBlock"><img src="/images/tools/energy_renewable_unlimited_windSurveyTool.png" title="Wind" alt="Wind Survey Tool" /><br />Wind</div>
-        <div id="btncreature_resources" class="surveyToolButton inlineBlock"><img src="/images/tools/creatureSurveyTool.png" title="Creature" alt="Creature Survey Tool" /><br />Creature</div>
+        <div id="btnchemical" class="surveyToolButton inlineBlock"><img src="/static/images/tools/chemicalSurveyTool.png" title="Chemical" alt="Chemical Survey Tool" /><br />Chemical</div>
+        <div id="btngas" class="surveyToolButton inlineBlock"><img src="/static/images/tools/gasSurveyTool.png" title="Gas" alt="Gas Survey Tool" /><br />Gas</div>
+        <div id="btnflora_resources" class="surveyToolButton inlineBlock"><img src="/static/images/tools/flora_resourcesSurveyTool.png" title="Flora" alt="Flora Survey Tool" /><br />Flora</div>
+        <div id="btnmineral" class="surveyToolButton inlineBlock"><img src="/static/images/tools/mineralSurveyTool.png" title="Mineral" alt="Mineral Survey Tool" /><br />Mineral</div>
+        <div id="btnenergy_renewable_unlimited_solar" class="surveyToolButton inlineBlock"><img src="/static/images/tools/energy_renewable_unlimited_solarSurveyTool.png" title="Solar" alt="Solar Survey Tool" /><br />Solar</div>
+        <div id="btnwater" class="surveyToolButton inlineBlock"><img src="/static/images/tools/waterSurveyTool.png" title="Water" alt="Water Survey Tool" /><br />Water</div>
+        <div id="btnenergy_renewable_unlimited_wind" class="surveyToolButton inlineBlock"><img src="/static/images/tools/energy_renewable_unlimited_windSurveyTool.png" title="Wind" alt="Wind Survey Tool" /><br />Wind</div>
+        <div id="btncreature_resources" class="surveyToolButton inlineBlock"><img src="/static/images/tools/creatureSurveyTool.png" title="Creature" alt="Creature Survey Tool" /><br />Creature</div>
       </div>
     </div>
     </div>
@@ -178,7 +178,7 @@ function confirmSurvey() {
         <p>Use the /mailsave command in game to save your survey droid game mail to your SWG profiles folder on your computer, then choose the file here.</p>
 {% endif %}
       </td>
-      <td><img src="/images/surveyDroid.png" style="width:128px;"/></td></tr></table>
+      <td><img src="/static/images/surveyDroid.png" style="width:128px;"/></td></tr></table>
     </div>
   </div>
   <div id="rightMainContent" class="ghCol">
@@ -203,6 +203,6 @@ function confirmSurvey() {
 </div>
 {{ blocks.pageFooter() }}
 {{ blocks.resourceForm() }}
-{{ blocks.joinForm(loggedin, ['?src_url=surveyList.py&', linkappend]|join, url, enableCAPTCHA, siteidCAPTCHA) }}
+{{ blocks.joinForm(loggedin, ['?src_url=surveyList.py&', linkappend]|join, url) }}
 <div id="mask"></div>
 </body></html>

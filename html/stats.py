@@ -20,18 +20,18 @@ along with Galaxy Harvester.  If not, see <http://www.gnu.org/licenses/>.
 
 """
 
-import os
 import cgi
-from http import cookies
-import dbSession
-import ghShared
-import ghLists
-import ghCharts
-import dbShared
+import os
 import time
 from datetime import datetime
-from jinja2 import Environment, FileSystemLoader
+from http import cookies
 
+import dbSession
+import dbShared
+import ghCharts
+import ghLists
+import ghShared
+from jinja2 import Environment, FileSystemLoader
 
 # Get current url
 try:
@@ -143,7 +143,7 @@ print(
         chart4URL=chart4URL,
         chart5URL=chart5URL,
         chart6URL=chart6URL,
-        enableCAPTCHA=ghShared.RECAPTCHA_ENABLED,
-        siteidCAPTCHA=ghShared.RECAPTCHA_SITEID,
+        
+        
     )
 )

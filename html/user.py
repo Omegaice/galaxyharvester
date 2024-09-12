@@ -265,8 +265,8 @@ def main():
                 resourceTypeList=ghLists.getResourceTypeList(galaxy),
                 uid=uid,
                 editable=(uid == currentUser and logged_state == 1),
-                enableCAPTCHA=ghShared.RECAPTCHA_ENABLED,
-                siteidCAPTCHA=ghShared.RECAPTCHA_SITEID,
+                
+                
             )
         )
     else:
@@ -306,8 +306,8 @@ def main():
                 sharedInventory=sharedInventory,
                 sharedRecipes=sharedRecipes,
                 inGameInfo=ghShared.convertText(inGameInfo, "html"),
-                enableCAPTCHA=ghShared.RECAPTCHA_ENABLED,
-                siteidCAPTCHA=ghShared.RECAPTCHA_SITEID,
+                
+                
             )
         )
 

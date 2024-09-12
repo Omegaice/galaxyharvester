@@ -1,7 +1,7 @@
 {% import 'blocks.html' as blocks %}
 <!DOCTYPE html>
 <html lang="en"><head><title>My Alerts - Galaxy Harvester</title>
-{{ blocks.commonResources(uiTheme, enableCAPTCHA) }}
+{{ blocks.commonResources(uiTheme) }}
 <script type="text/javascript">
 
 var rownum = 0;
@@ -88,7 +88,7 @@ function addFilterRow(tableName, numset) {
         "<td align='center'><input type='checkbox'{{ siteAlertCheckStr }} id='oHome"+numset+"' /></td>"+
         "<td align='center'><input type='checkbox'{{ emailAlertCheckStr }} id='oEmail"+numset+"'/></td>"+
         "<td align='center'><input type='checkbox'{{ mobileAlertCheckStr }} id='oMobile"+numset+"'/></td>"+
-        "<td><img src='/images/xRed16.png' alt='red x' title='Remove this row' style='cursor:pointer' onclick='removeRow("+numset+")'/></td>"+
+        "<td><img src='/static/images/xRed16.png' alt='red x' title='Remove this row' style='cursor:pointer' onclick='removeRow("+numset+")'/></td>"+
         "<td style='padding-left:6px;'><input id='fltGroup"+numset+"' type='text' size=14 maxlength=255></input></td>"+
         "</tr>");
     rownum = numset + 1;
@@ -210,19 +210,19 @@ function maskStats(typeSel) {
     </div>
     <span id="sentMessage"></span>
     <div id="alertData" style="margin-top:12px;">
-      <div style="position:relative;"><div id="alertMask" class="disabledDark" style="display:none;"><div id="udBusyImg" style="display:none;"><img src="/images/ghWait.gif" alt="waiting..." border=0 /></div></div>
+      <div style="position:relative;"><div id="alertMask" class="disabledDark" style="display:none;"><div id="udBusyImg" style="display:none;"><img src="/static/images/ghWait.gif" alt="waiting..." border=0 /></div></div>
       <h3>Quality Based on Stat Percentage Weights</h3>
       <table id="addQualityAlertTable"><thead>
       <tr class="tableHead"><td colspan=2 style="text-align:center;">Resource Types</td><td colspan=11 style="font-weight:bold;text-align:center;">Stat % Weights</td><td>Min Quality</td><td colspan=3 style="font-weight:bold;text-align:center;">Alert Types</td></tr>
       <tr><td>Res. Option</td><td>Resource</td><td>ER</td><td>CR</td><td>CD</td><td>DR</td><td>FL</td><td>HR</td><td>MA</td><td>PE</td><td>OQ</td><td>SR</td><td>UT</td><td align="center">Value</td><td width="40" align="center">Site</td><td width="40" align="center">E-Mail</td><td width="40" align="center">Mobile</td><td></td><td style='padding-lef:8px;'>Group/Note</td></tr>
       </thead></table>
-      <img src="/images/plusGreen32.png" alt="plus sign" title="Add another quality filter definition row" onclick="setTGlist(addFilterRow('addQualityAlertTable'));" style="cursor:pointer;margin-right:120px;"/>
+      <img src="/static/images/plusGreen32.png" alt="plus sign" title="Add another quality filter definition row" onclick="setTGlist(addFilterRow('addQualityAlertTable'));" style="cursor:pointer;margin-right:120px;"/>
       <h3>Raw Stat Value Triggered</h3>
       <table id="addAlertTable"><thead>
       <tr class="tableHead"><td colspan=2 style="text-align:center;">Resource Types</td><td colspan=11 style="font-weight:bold;text-align:center;">Minimum Stat Values</td><td colspan=3 style="font-weight:bold;text-align:center;">Alert Types</td></tr>
       <tr><td>Res. Option</td><td>Resource</td><td>ER</td><td>CR</td><td>CD</td><td>DR</td><td>FL</td><td>HR</td><td>MA</td><td>PE</td><td>OQ</td><td>SR</td><td>UT</td><td width="40" align="center">Site</td><td width="40" align="center">E-Mail</td><td width="40" align="center">Mobile</td><td></td><td style='padding-lef:8px;'>Group/Note</td></tr>
       </thead></table>
-      <img src="/images/plusGreen32.png" alt="plus sign" title="Add another filter definition row" onclick="setTGlist(addFilterRow('addAlertTable'));" style="cursor:pointer;margin-right:120px;"/>
+      <img src="/static/images/plusGreen32.png" alt="plus sign" title="Add another filter definition row" onclick="setTGlist(addFilterRow('addAlertTable'));" style="cursor:pointer;margin-right:120px;"/>
       <div id="sendResponse" style="display:none;"></div>
       </form>
     </div>
@@ -235,6 +235,6 @@ function maskStats(typeSel) {
   </div>
 </div>
 {{ blocks.pageFooter() }}
-{{ blocks.joinForm(loggedin, ['?src_url=myAlerts.py&', linkappend]|join, url, enableCAPTCHA, siteidCAPTCHA) }}
+{{ blocks.joinForm(loggedin, ['?src_url=myAlerts.py&', linkappend]|join, url) }}
 <div id="mask"></div>
 </body></html>

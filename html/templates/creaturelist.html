@@ -1,8 +1,8 @@
 {% import 'blocks.html' as blocks %}
 <!DOCTYPE html>
 <html lang="en"><head><title>Creature Harvesting - Galaxy Harvester</title>
-<script src="/js/Colors.js"></script>
-{{ blocks.commonResources(uiTheme, enableCAPTCHA) }}
+<script src="/static/js/Colors.js"></script>
+{{ blocks.commonResources(uiTheme) }}
 <script type="text/javascript">
 $(document).ready(function() {
     $("#galaxySel").val(getCookie("galaxy",defaultGalaxy));
@@ -76,7 +76,7 @@ function refreshResourceTypes() {
       <div style="font-size:16px;font-weight:bold;">
         Creature Harvesting
         {% if (containerType) %}
-          <div style="float:right;"><img src="/images/resources/{{ containerType }}.png"></div>
+          <div style="float:right;"><img src="/static/images/resources/{{ containerType }}.png"></div>
         {% endif %}
       </div>
       <h3 style="margin-bottom:12px;">
@@ -94,7 +94,7 @@ function refreshResourceTypes() {
         <div>
           <p>
             <a href="/creatureList.py/{{ type }}" class="bigLink">
-              <img src="/images/resources/{{ type }}.png"><span>{{ type.title() }}</span>
+              <img src="/static/images/resources/{{ type }}.png"><span>{{ type.title() }}</span>
             </a>
           </p>
         </div>
@@ -105,7 +105,7 @@ function refreshResourceTypes() {
   </div>
 </div>
 {{ blocks.pageFooter() }}
-{{ blocks.joinForm(loggedin, ['?src_url=creatureList.py&', linkappend]|join, url, enableCAPTCHA, siteidCAPTCHA) }}
+{{ blocks.joinForm(loggedin, ['?src_url=creatureList.py&', linkappend]|join, url) }}
 <div id="tooltip"></div>
 <div id="mask"> </div>
 </body></html>

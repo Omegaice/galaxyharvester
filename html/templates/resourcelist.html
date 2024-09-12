@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en"><head><title>Resource List - Galaxy Harvester</title>
 <link rel="alternate" type="application/rss+xml" title="Galaxy Harvester Resource Adds" href="http://feeds.feedburner.com/GalaxyHarvesterResourceActivity" />
-{{ blocks.commonResources(uiTheme, enableCAPTCHA) }}
+{{ blocks.commonResources(uiTheme) }}
 <script type="text/javascript">
 $(document).ready(function() {
     var planet = getQueryVar("planet");
@@ -166,7 +166,7 @@ function filterResources() {
 </div>
 {{ blocks.pageFooter() }}
 {{ blocks.resourceForm() }}
-{{ blocks.joinForm(loggedin, ['?src_url=resourceList.py&', linkappend]|join, url, enableCAPTCHA, siteidCAPTCHA) }}
+{{ blocks.joinForm(loggedin, ['?src_url=resourceList.py&', linkappend]|join, url) }}
 {{ blocks.favoriteForm() }}
 <div id="mask"></div>
 </body></html>

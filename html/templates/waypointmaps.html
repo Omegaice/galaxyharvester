@@ -1,8 +1,8 @@
 {% import 'blocks.html' as blocks %}
 <!DOCTYPE html>
 <html lang="en"><head><title>Waypoint Maps - Galaxy Harvester</title>
-{{ blocks.commonResources(uiTheme, enableCAPTCHA) }}
-<script src="/js/Colors.js"></script>
+{{ blocks.commonResources(uiTheme) }}
+<script src="/static/js/Colors.js"></script>
 <script type="text/javascript">
 var mapPlanet = "Corellia";
 $(document).ready(function() {
@@ -40,7 +40,7 @@ function updateMap(planetBtn) {
     $("#busyImgDrawWaypoints").show();
     // update backgound image with selected planet map
     var canvas = document.getElementById("mapCanvas");
-    $(canvas).css("background-image", "url('/images/maps/" + mapPlanet + ".jpg')");
+    $(canvas).css("background-image", "url('/static/images/maps/" + mapPlanet + ".jpg')");
     // clear canvas and draw waypoints for this planet
     if (canvas.getContext) {
         var context = canvas.getContext("2d");
@@ -126,7 +126,7 @@ function loadPlanetButtons(galaxy) {
       for (var i=0;i<$(planetIds).find('item').length;i++) {
           var planetName = $(planetNames).find('item').eq(i).text();
           var planetShort = planetName.replace(' ', '');
-          var planetButton = $('<div id="btn' + planetShort + '" class="planetButton inlineBlock"><img src="/images/planets/icon' + planetShort + '.png" title="' + planetName + '" alt="' + planetName + '" /><br />' + planetName + '</div>');
+          var planetButton = $('<div id="btn' + planetShort + '" class="planetButton inlineBlock"><img src="/static/images/planets/icon' + planetShort + '.png" title="' + planetName + '" alt="' + planetName + '" /><br />' + planetName + '</div>');
           $(planetButton).click(function(e) {
               updateMap(this);
           });
@@ -182,7 +182,7 @@ function loadPlanetButtons(galaxy) {
   </div>
 </div>
 {{ blocks.pageFooter() }}
-{{ blocks.joinForm(loggedin, ['?src_url=waypointMaps.py&', linkappend]|join, url, enableCAPTCHA, siteidCAPTCHA) }}
+{{ blocks.joinForm(loggedin, ['?src_url=waypointMaps.py&', linkappend]|join, url) }}
 {{ blocks.waypointForm(loggedin) }}
 <div id="tooltip"></div>
 <div id="mask"> </div>

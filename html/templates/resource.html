@@ -1,13 +1,13 @@
 {% import 'blocks.html' as blocks %}
 <!DOCTYPE html>
 <html lang="en"><head><title>{{ spawnName }} {{ spawnResourceTypeName }}- Galaxy Harvester</title>
-{{ blocks.commonResources(uiTheme, enableCAPTCHA) }}
+{{ blocks.commonResources(uiTheme) }}
 <meta property="og:title" content="{{ spawnName }} {{ spawnResourceTypeName }} at Galaxy Harvester">
 <meta property="og:description" content="{{ spawnStats }}">
-<meta property="og:image" content="https://www.galaxyharvester.net/images/resources/{{ spawnContainerType }}.png">
+<meta property="og:image" content="https://www.galaxyharvester.net/static/images/resources/{{ spawnContainerType }}.png">
 
 
-<script src="/js/Colors.js"></script>
+<script src="/static/js/Colors.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
     $("#galaxySel").val(getCookie("galaxy",defaultGalaxy));
@@ -93,7 +93,7 @@ function checkServerBest() {
 </div>
 {{ blocks.pageFooter() }}
 {{ blocks.resourceForm() }}
-{{ blocks.joinForm(loggedin, ['?src_url={{ BASE_SCRIPT_URL }}resource.py&', linkappend]|join, url, enableCAPTCHA, siteidCAPTCHA) }}
+{{ blocks.joinForm(loggedin, ['?src_url={{ BASE_SCRIPT_URL }}resource.py&', linkappend]|join, url) }}
 {{ blocks.waypointForm(loggedin) }}
 {{ blocks.favoriteForm() }}
 <div id="mask"></div>

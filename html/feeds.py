@@ -20,13 +20,14 @@ along with Galaxy Harvester.  If not, see <http://www.gnu.org/licenses/>.
 
 """
 
-import os
 import cgi
+import os
 from http import cookies
+
 import dbSession
-import ghShared
-import ghLists
 import dbShared
+import ghLists
+import ghShared
 from jinja2 import Environment, FileSystemLoader
 
 # Get current url
@@ -108,7 +109,7 @@ print(
         pictureName=pictureName,
         imgNum=ghShared.imgNum,
         galaxyList=ghLists.getGalaxyList(),
-        enableCAPTCHA=ghShared.RECAPTCHA_ENABLED,
-        siteidCAPTCHA=ghShared.RECAPTCHA_SITEID,
+        
+        
     )
 )

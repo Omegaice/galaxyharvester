@@ -149,7 +149,7 @@ print(
         resourceTypeList=ghLists.getResourceTypeList(galaxy),
         galaxyList=ghLists.getGalaxyList(),
         galaxyAdmin=galaxyAdmin,
-        enableCAPTCHA=ghShared.RECAPTCHA_ENABLED,
-        siteidCAPTCHA=ghShared.RECAPTCHA_SITEID,
+        
+        
     )
 )

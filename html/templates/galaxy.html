@@ -1,7 +1,7 @@
 {% import 'blocks.html' as blocks %}
 <!DOCTYPE html>
 <html lang="en"><head><title>Galaxy Admin - Galaxy Harvester</title>
-{{ blocks.commonResources(uiTheme, enableCAPTCHA) }}
+{{ blocks.commonResources(uiTheme) }}
 <script type="text/javascript">
 $(document).ready(function() {
     $("#galaxySel").val(getCookie("galaxy",defaultGalaxy));
@@ -31,7 +31,7 @@ function addAdmin(userID) {
     }
   });
   if ( foundUser == false ) {
-    $("#adminUsers").append("<div class='blockUserItem'>" + userID + "<img src='/images/xRed16.png' alt='Remove' title='Remove' onclick='this.parentNode.remove();'></img></div>");
+    $("#adminUsers").append("<div class='blockUserItem'>" + userID + "<img src='/static/images/xRed16.png' alt='Remove' title='Remove' onclick='this.parentNode.remove();'></img></div>");
   }
 }
 // Managed planet list functions
@@ -101,7 +101,7 @@ function saveGalaxy() {
           <tr><td><div title="List any Galaxy Harvester users that should be able to come to this screen and edit this galaxy's details.">Galaxy Admins:</div></td><td colspan="2"></td></tr>
           <tr><td colspan="3"><div id="adminUsers" class="inlineItemBlockList"><input id="adminUserAdd" type="text" size="12" />
 {% for admin in galaxyAdmins %}
-            <div class="blockUserItem">{{ admin }}<img src='/images/xRed16.png' alt='Remove' title='Remove' onclick='this.parentNode.remove();'></img></div>
+            <div class="blockUserItem">{{ admin }}<img src='/static/images/xRed16.png' alt='Remove' title='Remove' onclick='this.parentNode.remove();'></img></div>
 {% endfor %}          
           </div></td></tr>
           <tr><td><div id="busyImgSave" style="display: none;" class="lds-ripple"><div></div><div></div></div></td><td><input type="button" value="Save" class="ghButton" onclick="saveGalaxy();"/></input></td></tr>
@@ -116,6 +116,6 @@ function saveGalaxy() {
   </div>
 </div>
 {{ blocks.pageFooter() }}
-{{ blocks.joinForm(loggedin, ['?src_url=galaxy.py&', linkappend]|join, url, enableCAPTCHA, siteidCAPTCHA) }}
+{{ blocks.joinForm(loggedin, ['?src_url=galaxy.py&', linkappend]|join, url) }}
 <div id="mask"></div>
 </body></html>

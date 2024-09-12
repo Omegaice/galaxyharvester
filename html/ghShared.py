@@ -20,10 +20,10 @@ along with Galaxy Harvester.  If not, see <http://www.gnu.org/licenses/>.
 
 """
 
+import math
+import random
 import time
 from datetime import datetime
-import random
-import math
 
 BASE_SCRIPT_URL = "/"
 BASE_WEB_DOMAIN = "https://www.galaxyharvester.net"  # Update to the root domain name for your site. Used for email verification link do not include trailing /
@@ -45,10 +45,6 @@ automatedUsers = [
     "Reckoning",
     "TarkinSWG",
 ]
-RECAPTCHA_ENABLED = True
-RECAPTCHA_SITEID = "6LdKFa0ZAAAAAFqbK_-0VBPWtPmFAxjZuunGLqHo"
-RECAPTCHA_URL = "https://www.google.com/recaptcha/api/siteverify"
-
 # Minimum reputation needed to perform actions
 MIN_REP_VALS = {
     "VERIFY_RESOURCE": -99,

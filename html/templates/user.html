@@ -1,7 +1,7 @@
 {% import 'blocks.html' as blocks %}
 <!DOCTYPE html>
 <html lang="en"><head><title>Users - Galaxy Harvester</title>
-{{ blocks.commonResources(uiTheme, enableCAPTCHA) }}
+{{ blocks.commonResources(uiTheme) }}
 <script type="text/javascript">
 $(document).ready(function() {
     $("#galaxySel").val(getCookie("galaxy",defaultGalaxy));
@@ -18,7 +18,7 @@ $(document).ready(function() {
     });
     $("#themeSel").change(function() {
         // switch color style css when select changes
-        $("#colorStyle").attr("href","/style/themes/"+this.value+".css");
+        $("#colorStyle").attr("href","/static/style/themes/"+this.value+".css");
     });
 {% if (loggedin == 1 and currentUser == uid) %}
 	    $("#themeSel").val("{{ uiTheme }}");
@@ -153,9 +153,9 @@ function checkConfirmText(confirmationText) {
 					</table>
           <h3>Default Alert Types:</h3>
           <table class="resourceStats"><tr>
-            <th class="tableHead"><img src="/images/browser16.png"/>Site</th>
-            <th class="tableHead"><img src="/images/email16.png"/>E-mail</th>
-            <th class="tableHead"><img src="/images/mobile16.png"/>Mobile</th>
+            <th class="tableHead"><img src="/static/images/browser16.png"/>Site</th>
+            <th class="tableHead"><img src="/static/images/email16.png"/>E-mail</th>
+            <th class="tableHead"><img src="/static/images/mobile16.png"/>Mobile</th>
           </tr><tr class="statRow">
             <td align='center'><input type="checkbox"{{ siteAlertCheckStr }} id="oHome" /></td>
             <td align='center'><input type="checkbox"{{ emailAlertCheckStr }} id="oEmail"/></td>
@@ -181,11 +181,11 @@ function checkConfirmText(confirmationText) {
 	{% if (loggedin == 1 and currentUser != uid) %}
 		    <span id="friendStatus">
 		{% if tmpStat == 2 %}
-			    <img src="/images/rStar16.png" title="' + uid + ' has added you to their friends list." />
-			    <img src="/images/xGrey16.png" title="Click to remove from friends list." onclick="removeFriend(\'' + uid + '\')" />
+			    <img src="/static/images/rStar16.png" title="' + uid + ' has added you to their friends list." />
+			    <img src="/static/images/xGrey16.png" title="Click to remove from friends list." onclick="removeFriend(\'' + uid + '\')" />
 		{% elif tmpStat == 1 %}
-			    <img src="/images/eStar16.png" title="You have added ' + uid + ' to your friends list." />
-			    <img src="/images/xGrey16.png" title="Click to remove from friends list." onclick="removeFriend(\'' + uid + '\')" />
+			    <img src="/static/images/eStar16.png" title="You have added ' + uid + ' to your friends list." />
+			    <img src="/static/images/xGrey16.png" title="Click to remove from friends list." onclick="removeFriend(\'' + uid + '\')" />
 		{% else %}
 			    <button type=button value="Add To Friends" class="ghButton" onclick="addFriend('{{ uid }}');">Add To Friends</button>
 		{% endif %}
@@ -193,7 +193,7 @@ function checkConfirmText(confirmationText) {
 	{% endif %}
 	    </h2></div>
 	    <div id="profileData" style="height:240px;">
-	      <div style="float:left;height:140px;"><img class="largeAvatar" src="/images/users/{{ userPictureName }}" /></div>
+	      <div style="float:left;height:140px;"><img class="largeAvatar" src="/static/images/users/{{ userPictureName }}" /></div>
 	      <div style="float:left;height:128px;padding:4px;"><div style="font-size: 14px;font-weight:bold;">{{ userTitle }}</div>
 	      <div>{{ joinedStr }}</div>
 	      <br /><h4>In Game Info</h4>{{ inGameInfo }}
@@ -206,9 +206,9 @@ function checkConfirmText(confirmationText) {
 	      </div>
 	      <div style="clear:both;"></div>
 	      <div id="userStats">
-	        <div id="resourceScoreInfo" style="text-align:center;" class="inlineBlock" title="Resource Score"><span style="font-weight:bold;">{{ resScore }}</span><br/><img style="background-color: {{ resColor }};" src="/images/resScoreIcon.png" /><br /></div>
-	        <div id="mappingScoreInfo" style="text-align:center;" class="inlineBlock" title="Mapping Score"><span style="font-weight:bold;">{{ mapScore }}</span><br/><img style="background-color: {{ mapColor }};" src="/images/mapScoreIcon.png" /><br /></div>
-	        <div id="reputationInfo" style="text-align:center;" class="inlineBlock" title="Reputation Score"><span style="font-weight:bold;">{{ reputation }}</span><br/><img style="background-color: {{ repColor }};" src="/images/repIcon.png" /><br /></div>
+	        <div id="resourceScoreInfo" style="text-align:center;" class="inlineBlock" title="Resource Score"><span style="font-weight:bold;">{{ resScore }}</span><br/><img style="background-color: {{ resColor }};" src="/static/images/resScoreIcon.png" /><br /></div>
+	        <div id="mappingScoreInfo" style="text-align:center;" class="inlineBlock" title="Mapping Score"><span style="font-weight:bold;">{{ mapScore }}</span><br/><img style="background-color: {{ mapColor }};" src="/static/images/mapScoreIcon.png" /><br /></div>
+	        <div id="reputationInfo" style="text-align:center;" class="inlineBlock" title="Reputation Score"><span style="font-weight:bold;">{{ reputation }}</span><br/><img style="background-color: {{ repColor }};" src="/static/images/repIcon.png" /><br /></div>
 	      </div>
 	    </div>
       <div id="userAbilities">
@@ -227,7 +227,7 @@ function checkConfirmText(confirmationText) {
   </div>
 </div>
 {{ blocks.pageFooter() }}
-{{ blocks.joinForm(loggedin, ['?src_url=/user.py/{{ uid }}&', linkappend], url, enableCAPTCHA, siteidCAPTCHA) }}
+{{ blocks.joinForm(loggedin, ['?src_url=/user.py/{{ uid }}&', linkappend], url) }}
 {% if loginState != 0 %}
 	<div id="deleteMeDialog" class="window">
 	    <form name="deleteuserform">

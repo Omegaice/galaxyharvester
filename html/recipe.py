@@ -20,16 +20,17 @@ along with Galaxy Harvester.  If not, see <http://www.gnu.org/licenses/>.
 
 """
 
-import os
 import cgi
+import os
+import resource
 from http import cookies
+
 import dbSession
-import ghShared
+import dbShared
+import ghLists
 import ghNames
 import ghObjectRecipe
-import ghLists
-import dbShared
-import resource
+import ghShared
 import schematics
 from jinja2 import Environment, FileSystemLoader
 
@@ -342,8 +343,8 @@ def main():
             recipeID=r.recipeID,
             recipeName=r.recipeName,
             schemImageName=schemImageName,
-            enableCAPTCHA=ghShared.RECAPTCHA_ENABLED,
-            siteidCAPTCHA=ghShared.RECAPTCHA_SITEID,
+            
+            
         )
     )
 

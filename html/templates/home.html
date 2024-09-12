@@ -4,9 +4,9 @@
 <head><title>Home - Galaxy Harvester</title>
 <meta name="description" content="Tool for tracking resources spawning in galaxies of the MMO game Star Wars Galaxies that are emulating original game functionality." />
 <meta name="keywords" content="SWGEmu, crafting, resources, star wars galaxies, harvester" />
-<link rel="SHORTCUT ICON" href="favicon.ico"/>
-{{ blocks.commonResources(uiTheme, enableCAPTCHA) }}
-<script src="/js/Colors.js"></script>
+<link rel="SHORTCUT ICON" href="/static/images/favicon.ico"/>
+{{ blocks.commonResources(uiTheme) }}
+<script src="/static/js/Colors.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
     $("#galaxySel").val({{ galaxy }});
@@ -60,7 +60,7 @@ function refreshSurveying() {
     function() {
       $("#addBusyImgSurvey").css("display","none");
       if($("#surveyResourceData").html().includes("No Matching Resources")){
-        $("#surveyResourceData").html("<table><tr><td>Click the favorite selector on a resource you want to survey for to make it show up here.</td><td><img src='/images/favSelector.png'/></td></tr></table>");
+        $("#surveyResourceData").html("<table><tr><td>Click the favorite selector on a resource you want to survey for to make it show up here.</td><td><img src='/static/images/favSelector.png'/></td></tr></table>");
       }
   });
 }
@@ -72,7 +72,7 @@ function refreshHarvesting() {
     function() {
       $("#addBusyImgHarvest").css("display","none");
       if($("#harvestResourceData").html().includes("No Matching Resources")){
-        $("#harvestResourceData").html("<table><tr><td>Click the favorite selector on a resource you are currently harvesting to make it show up here.</td><td><img src='/images/favSelector.png'/></td></tr></table>");
+        $("#harvestResourceData").html("<table><tr><td>Click the favorite selector on a resource you are currently harvesting to make it show up here.</td><td><img src='/static/images/favSelector.png'/></td></tr></table>");
       }
   });
 }
@@ -201,7 +201,7 @@ function refreshHarvesting() {
 </div>
 {{ blocks.pageFooter() }}
 {{ blocks.resourceForm() }}
-{{ blocks.joinForm(loggedin, ['?src_url=ghHome.py&',linkappend]|join, url, enableCAPTCHA, siteidCAPTCHA) }}
+{{ blocks.joinForm(loggedin, ['?src_url=ghHome.py&',linkappend]|join, url) }}
 {{ blocks.waypointForm(loggedin) }}
 {{ blocks.favoriteForm() }}
 <div id="mask"></div>

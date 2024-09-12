@@ -20,15 +20,16 @@ along with Galaxy Harvester.  If not, see <http://www.gnu.org/licenses/>.
 
 """
 
-import os
 import cgi
+import os
 from http import cookies
+
 import dbSession
-import ghShared
-import ghLists
 import dbShared
-from jinja2 import Environment, FileSystemLoader
+import ghLists
 import ghObjectSchematic
+import ghShared
+from jinja2 import Environment, FileSystemLoader
 
 
 def getQualityData(conn, schematicID):
@@ -436,8 +437,8 @@ def main():
             canEdit=canEdit,
             profession=profession,
             canAdd=canAdd,
-            enableCAPTCHA=ghShared.RECAPTCHA_ENABLED,
-            siteidCAPTCHA=ghShared.RECAPTCHA_SITEID,
+            
+            
         )
     )
 

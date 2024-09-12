@@ -1,16 +1,13 @@
-{% macro commonResources(uiTheme, enableCAPTCHA) %}
+{% macro commonResources(uiTheme) %}
 <meta property="og:locale" content="en_US">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Galaxy Harvester">
-<link rel="stylesheet" type="text/css" href="/style/ghCore.css" media="screen" />
-<link rel="stylesheet" type="text/css" href="/style/themes/{{ uiTheme }}.css" media="screen" />
-<link rel="stylesheet" type="text/css" href="/style/autocomplete.css" media="screen" />
-<script src="/js/ghShared.js" type="text/javascript"></script>
-<script src="/js/jquery.min.js"></script>
-<script src="/js/jquery.autocomplete-min.js"></script>
-{% if ( enableCAPTCHA ) %}
-<script src="https://www.google.com/recaptcha/api.js"></script>
-{% endif %}
+<link rel="stylesheet" type="text/css" href="/static/style/ghCore.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="/static/style/themes/{{ uiTheme }}.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="/static/style/autocomplete.css" media="screen" />
+<script src="/static/js/ghShared.js" type="text/javascript"></script>
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/jquery.autocomplete-min.js"></script>
 {% endmacro %}
 
 {% macro headerSection(loginState, userID, loginResult, linkappend, url, imgNum, galaxyList, pictureName) %}
@@ -19,11 +16,11 @@
 	    <div id="topLeftLinks" class="ghWidgetBox">
 	{{ topLeftLinks(linkappend) }}
 	    {% if ( MOBILE_PLATFORM == 'android' ) %}
-			<a href="https://play.google.com/store/apps/details?id=com.ioscode.gameaid.galaxyharvester"><img class="appStoreBadge" src="/images/appstores/google-play-badge.png" alt="Get it on Google Play"/></a>
+			<a href="https://play.google.com/store/apps/details?id=com.ioscode.gameaid.galaxyharvester"><img class="appStoreBadge" src="/static/images/appstores/google-play-badge.png" alt="Get it on Google Play"/></a>
 			{% elif ( MOBILE_PLATFORM == 'ios' ) %}
-			<a href="https://itunes.apple.com/us/app/galaxy-harvester/id1082088469?ls=1&mt=8"><img class="appStoreBadge" src="/images/appstores/AppleStore.png" alt="Get it in the Apple Store"/></a>
+			<a href="https://itunes.apple.com/us/app/galaxy-harvester/id1082088469?ls=1&mt=8"><img class="appStoreBadge" src="/static/images/appstores/AppleStore.png" alt="Get it in the Apple Store"/></a>
 			{% elif ( MOBILE_PLATFORM == 'amazon' ) %}
-			<a href="http://www.amazon.com/gp/product/B01CXC657Y/ref=mas_pm_galaxy_harvester"><img class="appStoreBadge" src="/images/appstores/amazon-badge.png" alt="Get it on Amazon"/></a>
+			<a href="http://www.amazon.com/gp/product/B01CXC657Y/ref=mas_pm_galaxy_harvester"><img class="appStoreBadge" src="/static/images/appstores/amazon-badge.png" alt="Get it on Amazon"/></a>
 			{% else %}
 			<a href="https://www.youtube.com/watch?v=wF3Xpg3Uip8" target="_blank"><div class="alert control">New Here? Watch this Getting Started video.</div></a>
 			{% endif %}
@@ -42,11 +39,11 @@
 {% endmacro %}
 
 {% macro topLeftLinks(linkappend) %}
-	  <a href="{{ BASE_SCRIPT_URL }}addResources.py?{{ linkappend }}"><img style="height:48px;" src="/images/ghAdd.png" alt="Add Resources" title="Add Resources" /></a>
-	  <a href="{{ BASE_SCRIPT_URL }}resourceList.py?{{ linkappend }}"><img style="height:48px;" src="/images/ghList.png" alt="Resource List" title="Resource List" /></a>
-	  <a href="{{ BASE_SCRIPT_URL }}waypointMaps.py?{{ linkappend }}"><img style="height:48px;" src="/images/ghMaps.png" alt="Waypoint Maps" title="Find and browse your waypoints on the planet maps" /></a>
-	  <a href="{{ BASE_SCRIPT_URL }}stats.py?{{ linkappend }}"><img style="height:48px;" src="/images/ghStats.png" alt="Member Stats" title="Member Stats" /></a>
-	  <a href="{{ BASE_SCRIPT_URL }}resourceFinder.py?{{ linkappend }}"><img style="height:48px;" src="/images/ghFind.png" alt="Resource Finder" title="Resource Finder" /></a>
+	  <a href="{{ BASE_SCRIPT_URL }}addResources.py?{{ linkappend }}"><img style="height:48px;" src="/static/images/ghAdd.png" alt="Add Resources" title="Add Resources" /></a>
+	  <a href="{{ BASE_SCRIPT_URL }}resourceList.py?{{ linkappend }}"><img style="height:48px;" src="/static/images/ghList.png" alt="Resource List" title="Resource List" /></a>
+	  <a href="{{ BASE_SCRIPT_URL }}waypointMaps.py?{{ linkappend }}"><img style="height:48px;" src="/static/images/ghMaps.png" alt="Waypoint Maps" title="Find and browse your waypoints on the planet maps" /></a>
+	  <a href="{{ BASE_SCRIPT_URL }}stats.py?{{ linkappend }}"><img style="height:48px;" src="/static/images/ghStats.png" alt="Member Stats" title="Member Stats" /></a>
+	  <a href="{{ BASE_SCRIPT_URL }}resourceFinder.py?{{ linkappend }}"><img style="height:48px;" src="/static/images/ghFind.png" alt="Resource Finder" title="Resource Finder" /></a>
 {% endmacro %}
 
 {% macro loginForm(loginState, userID, loginResult, linkappend, url, galaxyList, pictureName) %}
@@ -55,11 +52,11 @@
     <a href="{{ BASE_SCRIPT_URL }}user.py/{{ userID }}?{{ linkappend }}">profile</a> |
     <a href="{{ BASE_SCRIPT_URL }}logout.py?src_url={{ url }}&{{ linkappend }}">logout</a></div>
     <div style="float:right;position:relative;"><a href="{{ BASE_SCRIPT_URL }}user.py/{{ userID }}?{{ linkappend }}">
-    <img src="/images/users/{{ pictureName }}" class="smallAvatar" /></a></div>
+    <img src="/static/images/users/{{ pictureName }}" class="smallAvatar" /></a></div>
     <div style="width:100%;height:48px;clear:both;vertical-align:bottom;">
-    <div id="myShortcuts" style="float:left;position:relative;top:20px;"><a href="{{ BASE_SCRIPT_URL }}myAlerts.py?{{ linkappend }}"><img src="/images/alerts32.png" style="width:24px;height:24px;" alt="alert icon" title="Click to go to your alert filters page." /></a>
-    <a href="{{ BASE_SCRIPT_URL }}user.py/{{ userID }}/inventory?{{ linkappend }}"><img src="/images/inventory32.png" style="width:24px;height:24px;" alt="inventory icon" title="Click to manage your resource inventory." /></a>
-    <a href="{{ BASE_SCRIPT_URL }}recipe.py/home?{{ linkappend }}"><img src="/images/recipes32.png" style="width:24px;height:24px;" alt="recipes icon" title="Manage the recipes you have created and see suggested recipes based on your resources." /></a></div>
+    <div id="myShortcuts" style="float:left;position:relative;top:20px;"><a href="{{ BASE_SCRIPT_URL }}myAlerts.py?{{ linkappend }}"><img src="/static/images/alerts32.png" style="width:24px;height:24px;" alt="alert icon" title="Click to go to your alert filters page." /></a>
+    <a href="{{ BASE_SCRIPT_URL }}user.py/{{ userID }}/inventory?{{ linkappend }}"><img src="/static/images/inventory32.png" style="width:24px;height:24px;" alt="inventory icon" title="Click to manage your resource inventory." /></a>
+    <a href="{{ BASE_SCRIPT_URL }}recipe.py/home?{{ linkappend }}"><img src="/static/images/recipes32.png" style="width:24px;height:24px;" alt="recipes icon" title="Manage the recipes you have created and see suggested recipes based on your resources." /></a></div>
     <div style="float:right;position:relative;top:20px;">Galaxy: <select name="galaxySel" id="galaxySel" onchange="switchGalaxy(this.value);">
 {{ galaxyList }}
     </select></div>
@@ -129,7 +126,7 @@
 	</div>
 {% endmacro %}
 
-{% macro joinForm(loginState, linkappend, url, enableCAPTCHA, siteidCAPTCHA) %}
+{% macro joinForm(loginState, linkappend, url) %}
 {% if loginState == 0 %}
 	<script>
 		function onJoinSubmit(token) {
@@ -155,16 +152,8 @@
 	    <td><input type="password" name="verifypass" tabindex="13" size="12" maxlength="16" onchange="valVpass(&quot;userpass&quot;,this)" /></td>
         <td><span id="vpassInf" class="formMsg">Passwords do not match.</span></td></tr>
 	    </table>
-		<div style="text-align: center;padding: 20px;">
-			<button class="g-recaptcha ghButton" data-sitekey="{{ siteidCAPTCHA }}" data-callback='onJoinSubmit' data-action='submitJoin' tabindex="14">Create<img src="/images/ghWait.gif" id="joinWait" style="display:none;"/></button>
-		</div>
 		</form>
 		<div class="tip"><a href="/privacy.html" target="_blank">Privacy Policy</a>
-		{% if enableCAPTCHA %}
-			<br/><small>This site is protected by reCAPTCHA and the Google
-			<a href="https://policies.google.com/privacy">Privacy Policy</a> and
-			<a href="https://policies.google.com/terms">Terms of Service</a> apply.</small>
-		{% endif %}
 		</div>
 	</div>
 	<script type="text/javascript">
@@ -263,10 +252,10 @@
 	    <div id="favCurrentInfo" class="standOut"></div>
         <table class="favPick">
 			<tr class="favPickImageRow">
-				<td style="cursor: pointer;" id="favPicksurvey"><img src="/images/resources/underground_liquid.png" class="favPicker"/></td>
-				<td style="cursor: pointer;" id="favPickharvest"><img src="/images/harvesterCapacity.png" class="favPicker"/></td>
-				<td style="cursor: pointer;" id="favPickshop"><img src="/images/favoriteOn.png" class="favPicker"/></td>
-				<td style="cursor: pointer;" id="favPickinv"><img src="/images/inventory64.png" class="favPicker"/></td>
+				<td style="cursor: pointer;" id="favPicksurvey"><img src="/static/images/resources/underground_liquid.png" class="favPicker"/></td>
+				<td style="cursor: pointer;" id="favPickharvest"><img src="/static/images/harvesterCapacity.png" class="favPicker"/></td>
+				<td style="cursor: pointer;" id="favPickshop"><img src="/static/images/favoriteOn.png" class="favPicker"/></td>
+				<td style="cursor: pointer;" id="favPickinv"><img src="/static/images/inventory64.png" class="favPicker"/></td>
 			</tr>
 			<tr>
 				<td id="favTextsurvey">Surveying</td>

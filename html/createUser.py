@@ -20,56 +20,23 @@ along with Galaxy Harvester.  If not, see <http://www.gnu.org/licenses/>.
 
 """
 
-import sys
-import os
 import cgi
-import re
-from http import cookies
 import hashlib
-import uuid
-import json
-import urllib
-import requests
+import os
+import re
 import smtplib
+import sys
+import urllib
+import uuid
 from email.message import EmailMessage
+from http import cookies
+
 import dbShared
 import ghShared
 
 sys.path.append("../")
 import dbInfo
-import keyInfo
 import mailInfo
-
-
-def getCAPTCHA(token):
-    # prepare data for request
-    values = {"secret": keyInfo.RECAPTCHA_KEY, "response": token}
-    # reads the response back from Google
-    try:
-        response = requests.post(ghShared.RECAPTCHA_URL, values)
-        cResult = json.loads(response.content)
-        if cResult["success"] == True:
-            return 1
-        else:
-            sys.stderr.write("Captcha failure: {0}\n".format(str(cResult)))
-            return -1
-    except requests.RequestException as e:
-        sys.stderr.write("Communication with reCAPTCHA URL failure: {0}".format(str(e)))
-        return -1
-    except KeyError as e:
-        sys.stderr.write(
-            "Failed to decode response for captcha: {0}\n{1}".format(
-                response.status_code, str(e)
-            )
-        )
-        return -1
-    except AttributeError as e:
-        sys.stderr.write(
-            "Failed to interpret reCAPTCHA response: {0}\n{1}".format(
-                response.status_code, str(e)
-            )
-        )
-        return -1
 
 
 def sendVerificationMail(user, address, code):
@@ -120,7 +87,6 @@ form = cgi.FieldStorage()
 uname = form.getfirst("uname")
 email = form.getfirst("email")
 userpass = form.getfirst("userpass")
-tokenCAPTCHA = form.getfirst("g-recaptcha-response")
 # escape input to prevent sql injection
 uname = dbShared.dbInsertSafe(uname)
 email = dbShared.dbInsertSafe(email)
@@ -143,31 +109,6 @@ else:
         errorstr = errorstr + "Error: email address contains illegal characters.\n"
     if "@eyepaste.com" in email:
         errorstr = errorstr + "Error: disposable emails not allowed.\n"
-
-# CAPTCHAv3 validation https://developers.google.com/recaptcha/docs/v3
-if ghShared.RECAPTCHA_ENABLED:
-    if tokenCAPTCHA:
-        scoreCAPTCHA = getCAPTCHA(tokenCAPTCHA)
-        if scoreCAPTCHA == -1:
-            errorstr = errorstr + "Error: CAPTCHA problem, please contact support."
-        elif not scoreCAPTCHA > 0.5:
-            sys.stderr.write(
-                "Registration failure due to low CAPTCHA score {0}".format(
-                    str(scoreCAPTCHA)
-                )
-            )
-            errorstr = errorstr + "Error: Robot detected\n"
-    else:
-        if (
-            "HTTP_USER_AGENT" in os.environ
-            and ghShared.getMobilePlatform(os.environ["HTTP_USER_AGENT"]) != ""
-        ):
-            errorstr = (
-                errorstr
-                + "Error: Sorry, mobile joining is temporarily unavailable.  Please visit Galaxy Harvester from a web browser to join.  https://galaxyharvester.net"
-            )
-        else:
-            errorstr = errorstr + "Error: No CAPTCHA token found\n"
 
 if errorstr != "":
     result = "createuserfail"

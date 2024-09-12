@@ -1,1 +1,0 @@
-RECAPTCHA_KEY = "putkeyhere"
