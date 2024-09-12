@@ -1,65 +1,91 @@
 #!/usr/bin/env python3
 """
 
- Copyright 2020 Paul Willworth <ioscode@gmail.com>
+Copyright 2020 Paul Willworth <ioscode@gmail.com>
 
- This file is part of Galaxy Harvester.
+This file is part of Galaxy Harvester.
 
- Galaxy Harvester is free software: you can redistribute it and/or modify
- it under the terms of the GNU Affero General Public License as published by
- the Free Software Foundation, either version 3 of the License, or
- (at your option) any later version.
+Galaxy Harvester is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
- Galaxy Harvester is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU Affero General Public License for more details.
+Galaxy Harvester is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
 
- You should have received a copy of the GNU Affero General Public License
- along with Galaxy Harvester.  If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU Affero General Public License
+along with Galaxy Harvester.  If not, see <http://www.gnu.org/licenses/>.
 
 """
 
 import cgi
-import pymysql
 import dbShared
+
 #
 form = cgi.FieldStorage()
 
-resCategory = form.getfirst('resCategory', '')
-outType = form.getfirst('outType', '')
+resCategory = form.getfirst("resCategory", "")
+outType = form.getfirst("outType", "")
 # escape input to prevent sql injection
 resCategory = dbShared.dbInsertSafe(resCategory)
 outType = dbShared.dbInsertSafe(outType)
 
-print('Content-type: text/html\n')
-if outType == 'links':
-	print('<ul class="plain">')
-elif outType == 'graphic':
-	print('')
+print("Content-type: text/html\n")
+if outType == "links":
+    print('<ul class="plain">')
+elif outType == "graphic":
+    print("")
 else:
-	print('<option value="none" title="p00000000000">None</option>')
+    print('<option value="none" title="p00000000000">None</option>')
 
 if len(resCategory) > 0:
-	joinStr = ' INNER JOIN (SELECT resourceGroup FROM tResourceGroupCategory WHERE resourceCategory = "' + resCategory + '") rgc ON tResourceGroup.resourceGroup = rgc.resourceGroup'
+    joinStr = (
+        ' INNER JOIN (SELECT resourceGroup FROM tResourceGroupCategory WHERE resourceCategory = "'
+        + resCategory
+        + '") rgc ON tResourceGroup.resourceGroup = rgc.resourceGroup'
+    )
 else:
-	joinStr = ''
+    joinStr = ""
 
 conn = dbShared.ghConn()
 cursor = conn.cursor()
-if (cursor):
-	cursor.execute('SELECT tResourceGroup.resourceGroup, groupName, CONCAT("p", CASE WHEN Max(CRmax)>0 THEN "1" ELSE "0" END, CASE WHEN Max(CDmax)>0 THEN "1" ELSE "0" END, CASE WHEN Max(DRmax)>0 THEN "1" ELSE "0" END, CASE WHEN Max(FLmax)>0 THEN "1" ELSE "0" END, CASE WHEN Max(HRmax)>0 THEN "1" ELSE "0" END, CASE WHEN Max(MAmax)>0 THEN "1" ELSE "0" END, CASE WHEN Max(PEmax)>0 THEN "1" ELSE "0" END, CASE WHEN Max(OQmax)>0 THEN "1" ELSE "0" END, CASE WHEN Max(SRmax)>0 THEN "1" ELSE "0" END, CASE WHEN Max(UTmax)>0 THEN "1" ELSE "0" END, CASE WHEN Max(ERmax)>0 THEN "1" ELSE "0" END) AS statMask, tResourceGroup.containerType FROM tResourceGroup' + joinStr + ' LEFT JOIN tResourceTypeGroup ON tResourceGroup.resourceGroup = tResourceTypeGroup.resourceGroup LEFT JOIN tResourceType ON tResourceTypeGroup.resourceType = tResourceType.resourceType WHERE enterable>0 GROUP BY tResourceGroup.resourceGroup ORDER BY groupName;')
-	row = cursor.fetchone()
-	while (row != None):
-		if outType == 'links':
-			print('<li><a href="/resourceType.py/' + row[0] + '">' + row[1] + '</a></li>')
-		elif outType == 'graphic':
-			print("<div id='resInventory{0}' class='inventoryItem inlineBlock' style='background-image:url(/images/resources/{2}.png);background-size:64px 64px;' tag='{1}'>".format(row[0], row[2], row[3]))
-			print("<div style='position: absolute;bottom:0;width:100%'>{0}</div>".format(row[1]))
-			print("</div>")
-		else:
-			print('<option value="'+str(row[0])+'" title="'+row[2]+'">'+row[1]+'</option>')
-		row = cursor.fetchone()
+if cursor:
+    cursor.execute(
+        'SELECT tResourceGroup.resourceGroup, groupName, CONCAT("p", CASE WHEN Max(CRmax)>0 THEN "1" ELSE "0" END, CASE WHEN Max(CDmax)>0 THEN "1" ELSE "0" END, CASE WHEN Max(DRmax)>0 THEN "1" ELSE "0" END, CASE WHEN Max(FLmax)>0 THEN "1" ELSE "0" END, CASE WHEN Max(HRmax)>0 THEN "1" ELSE "0" END, CASE WHEN Max(MAmax)>0 THEN "1" ELSE "0" END, CASE WHEN Max(PEmax)>0 THEN "1" ELSE "0" END, CASE WHEN Max(OQmax)>0 THEN "1" ELSE "0" END, CASE WHEN Max(SRmax)>0 THEN "1" ELSE "0" END, CASE WHEN Max(UTmax)>0 THEN "1" ELSE "0" END, CASE WHEN Max(ERmax)>0 THEN "1" ELSE "0" END) AS statMask, tResourceGroup.containerType FROM tResourceGroup'
+        + joinStr
+        + " LEFT JOIN tResourceTypeGroup ON tResourceGroup.resourceGroup = tResourceTypeGroup.resourceGroup LEFT JOIN tResourceType ON tResourceTypeGroup.resourceType = tResourceType.resourceType WHERE enterable>0 GROUP BY tResourceGroup.resourceGroup ORDER BY groupName;"
+    )
+    row = cursor.fetchone()
+    while row != None:
+        if outType == "links":
+            print(
+                '<li><a href="/resourceType.py/' + row[0] + '">' + row[1] + "</a></li>"
+            )
+        elif outType == "graphic":
+            print(
+                "<div id='resInventory{0}' class='inventoryItem inlineBlock' style='background-image:url(/images/resources/{2}.png);background-size:64px 64px;' tag='{1}'>".format(
+                    row[0], row[2], row[3]
+                )
+            )
+            print(
+                "<div style='position: absolute;bottom:0;width:100%'>{0}</div>".format(
+                    row[1]
+                )
+            )
+            print("</div>")
+        else:
+            print(
+                '<option value="'
+                + str(row[0])
+                + '" title="'
+                + row[2]
+                + '">'
+                + row[1]
+                + "</option>"
+            )
+        row = cursor.fetchone()
 
-if outType == 'links':
-	print('</ul>')
+if outType == "links":
+    print("</ul>")

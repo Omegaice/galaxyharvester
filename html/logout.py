@@ -1,29 +1,28 @@
 #!/usr/bin/env python3
 """
 
- Copyright 2020 Paul Willworth <ioscode@gmail.com>
+Copyright 2020 Paul Willworth <ioscode@gmail.com>
 
- This file is part of Galaxy Harvester.
+This file is part of Galaxy Harvester.
 
- Galaxy Harvester is free software: you can redistribute it and/or modify
- it under the terms of the GNU Affero General Public License as published by
- the Free Software Foundation, either version 3 of the License, or
- (at your option) any later version.
+Galaxy Harvester is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
- Galaxy Harvester is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU Affero General Public License for more details.
+Galaxy Harvester is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
 
- You should have received a copy of the GNU Affero General Public License
- along with Galaxy Harvester.  If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU Affero General Public License
+along with Galaxy Harvester.  If not, see <http://www.gnu.org/licenses/>.
 
 """
 
 import os
 import cgi
 from http import cookies
-import pymysql
 import dbSession
 import dbShared
 
@@ -38,19 +37,19 @@ form = cgi.FieldStorage()
 
 logged_state = 0
 try:
-    currentUser = C['userID'].value
+    currentUser = C["userID"].value
 except KeyError:
     currentUser = ""
 
 try:
-    sid = C['gh_sid'].value
+    sid = C["gh_sid"].value
 except KeyError:
-    sid = form.getfirst('gh_sid', '')
+    sid = form.getfirst("gh_sid", "")
 # escape input to prevent sql injection
 sid = dbShared.dbInsertSafe(sid)
 
 sess = dbSession.getSession(sid)
-if (sess != ''):
+if sess != "":
     logged_state = 1
     currentUser = sess
 
@@ -59,7 +58,13 @@ src_url = form.getfirst("src_url")
 if logged_state > 0:
     conn = dbShared.ghConn()
     cursor = conn.cursor()
-    updatestr = 'DELETE FROM tSessions WHERE userID="' + currentUser + '" AND sid="' + sid + '";'
+    updatestr = (
+        'DELETE FROM tSessions WHERE userID="'
+        + currentUser
+        + '" AND sid="'
+        + sid
+        + '";'
+    )
     cursor.execute(updatestr)
     cursor.close()
     conn.close()
@@ -67,9 +72,9 @@ if logged_state > 0:
 
 if src_url != None:
     # go back where they came from
-    print('Status: 303 See Other')
-    print('Location: ' + src_url)
-    print('')
+    print("Status: 303 See Other")
+    print("Location: " + src_url)
+    print("")
 else:
-    print('Content-Type: text/html\n')
-    print('logout complete')
+    print("Content-Type: text/html\n")
+    print("logout complete")

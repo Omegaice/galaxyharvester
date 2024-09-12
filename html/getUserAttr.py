@@ -1,70 +1,70 @@
 #!/usr/bin/env python3
 """
 
- Copyright 2020 Paul Willworth <ioscode@gmail.com>
+Copyright 2020 Paul Willworth <ioscode@gmail.com>
 
- This file is part of Galaxy Harvester.
+This file is part of Galaxy Harvester.
 
- Galaxy Harvester is free software: you can redistribute it and/or modify
- it under the terms of the GNU Affero General Public License as published by
- the Free Software Foundation, either version 3 of the License, or
- (at your option) any later version.
+Galaxy Harvester is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
- Galaxy Harvester is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU Affero General Public License for more details.
+Galaxy Harvester is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
 
- You should have received a copy of the GNU Affero General Public License
- along with Galaxy Harvester.  If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU Affero General Public License
+along with Galaxy Harvester.  If not, see <http://www.gnu.org/licenses/>.
 
 """
+
 import os
 import sys
 from http import cookies
 import dbSession
 import dbShared
 import cgi
-import pymysql
-import ghLists
+
 #
 #
 # Get current url
 try:
-	url = os.environ['SCRIPT_NAME']
+    url = os.environ["SCRIPT_NAME"]
 except KeyError:
-	url = ''
+    url = ""
 
 form = cgi.FieldStorage()
 # Get Cookies
 useCookies = 1
 C = cookies.SimpleCookie()
 try:
-	C.load(os.environ['HTTP_COOKIE'])
+    C.load(os.environ["HTTP_COOKIE"])
 except KeyError:
-	useCookies = 0
+    useCookies = 0
 
 if useCookies:
-	try:
-		currentUser = C['userID'].value
-	except KeyError:
-		currentUser = ''
-	try:
-		loginResult = C['loginAttempt'].value
-	except KeyError:
-		loginResult = 'success'
-	try:
-		sid = C['gh_sid'].value
-	except KeyError:
-		sid = form.getfirst('gh_sid', '')
+    try:
+        currentUser = C["userID"].value
+    except KeyError:
+        currentUser = ""
+    try:
+        loginResult = C["loginAttempt"].value
+    except KeyError:
+        loginResult = "success"
+    try:
+        sid = C["gh_sid"].value
+    except KeyError:
+        sid = form.getfirst("gh_sid", "")
 else:
-	currentUser = ''
-	loginResult = 'success'
-	sid = form.getfirst('gh_sid', '')
+    currentUser = ""
+    loginResult = "success"
+    sid = form.getfirst("gh_sid", "")
 
 
-user = form.getfirst('user', '')
-attribute = form.getfirst('attribute', '')
+user = form.getfirst("user", "")
+attribute = form.getfirst("attribute", "")
 # escape input to prevent sql injection
 user = dbShared.dbInsertSafe(user)
 attribute = dbShared.dbInsertSafe(attribute)
@@ -72,25 +72,25 @@ attribute = dbShared.dbInsertSafe(attribute)
 logged_state = 0
 
 sess = dbSession.getSession(sid)
-if (sess != ''):
-	logged_state = 1
-	currentUser = sess
+if sess != "":
+    logged_state = 1
+    currentUser = sess
 
 # Main program
-print('Content-type: text/xml\n')
-attrResult = ''
+print("Content-type: text/xml\n")
+attrResult = ""
 
-if attribute == 'pictureName':
-	attrResult = dbShared.getUserAttr(user, attribute);
+if attribute == "pictureName":
+    attrResult = dbShared.getUserAttr(user, attribute)
 else:
     if logged_state > 0 and user == currentUser:
-        attrResult = dbShared.getUserAttr(user, attribute);
+        attrResult = dbShared.getUserAttr(user, attribute)
     else:
         attrResult = "Forbidden"
 
-print('<' + attribute + '>' + attrResult + '</' + attribute + '>')
+print("<" + attribute + ">" + attrResult + "</" + attribute + ">")
 
-if (attrResult.find("Error:") > -1):
-	sys.exit(500)
+if attrResult.find("Error:") > -1:
+    sys.exit(500)
 else:
-	sys.exit(200)
+    sys.exit(200)

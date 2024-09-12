@@ -1,4 +1,4 @@
-#coding: UTF8
+# coding: UTF8
 """
 mailer module
 
@@ -16,18 +16,19 @@ Version 0.5 is based on a patch by Douglas Mayle
 Sample code:
 
     import mailer
-    
+
     message = mailer.Message()
     message.From = "me@example.com"
     message.To = "you@example.com"
     message.Subject = "My Vacation"
     message.Body = open("letter.txt", "rb").read()
     message.attach("picture.jpg")
-    
+
     sender = mailer.Mailer('mail.example.com')
     sender.send(message)
 
 """
+
 import smtplib
 
 # this is to support name changes
@@ -61,10 +62,11 @@ __author__ = "Ryan Ginstrom"
 __license__ = "MIT"
 __description__ = "A module to send email simply in Python"
 
+
 class Mailer(object):
     """
     Represents an SMTP connection.
-    
+
     Use login() to log in with a username and password.
     """
 
@@ -73,7 +75,7 @@ class Mailer(object):
         self.port = port
         self._usr = None
         self._pwd = None
-    
+
     def login(self, usr, pwd):
         self._usr = usr
         self._pwd = pwd
@@ -100,7 +102,7 @@ class Mailer(object):
             self._send(server, msg)
 
         server.quit()
-    
+
     def _send(self, server, msg):
         """
         Sends a single message using the server
@@ -113,27 +115,36 @@ class Mailer(object):
             you = list(msg.To)
         server.sendmail(me, you, msg.as_string())
 
+
 class Message(object):
     """
     Represents an email message.
-    
+
     Set the To, From, Subject, and Body attributes as plain-text strings.
     Optionally, set the Html attribute to send an HTML email, or use the
     attach() method to attach files.
-    
+
     Use the charset property to send messages using other than us-ascii
-    
+
     If you specify an attachments argument, it should be a list of
     attachment filenames: ["file1.txt", "file2.txt"]
-    
+
     `To` should be a string for a single address, and a sequence
     of strings for multiple recipients (castable to list)
-    
+
     Send using the Mailer class.
     """
 
-    def __init__(self, To=None, From=None, Subject=None, Body=None, Html=None,
-                 attachments=None, charset=None):
+    def __init__(
+        self,
+        To=None,
+        From=None,
+        Subject=None,
+        Body=None,
+        Html=None,
+        attachments=None,
+        charset=None,
+    ):
         self.attachments = []
         if attachments:
             for attachment in attachments:
@@ -153,7 +164,7 @@ class Message(object):
         self.Subject = Subject
         self.Body = Body
         self.Html = Html
-        self.charset = charset or 'us-ascii'
+        self.charset = charset or "us-ascii"
 
     def as_string(self):
         """Get the email as a string to send in the mailer"""
@@ -162,63 +173,63 @@ class Message(object):
             return self._plaintext()
         else:
             return self._multipart()
-    
+
     def _plaintext(self):
         """Plain text email with no attachments"""
 
         if not self.Html:
-            msg = MIMEText(self.Body, 'plain', self.charset)
+            msg = MIMEText(self.Body, "plain", self.charset)
         else:
-            msg  = self._with_html()
+            msg = self._with_html()
 
         self._set_info(msg)
         return msg.as_string()
-            
+
     def _with_html(self):
         """There's an html part"""
 
-        outer = MIMEMultipart('alternative')
-        
-        part1 = MIMEText(self.Body, 'plain', self.charset)
-        part2 = MIMEText(self.Html, 'html', self.charset)
+        outer = MIMEMultipart("alternative")
+
+        part1 = MIMEText(self.Body, "plain", self.charset)
+        part2 = MIMEText(self.Html, "html", self.charset)
 
         outer.attach(part1)
         outer.attach(part2)
-        
+
         return outer
 
     def _set_info(self, msg):
-        if self.charset == 'us-ascii':
-            msg['Subject'] = self.Subject
+        if self.charset == "us-ascii":
+            msg["Subject"] = self.Subject
         else:
             subject = unicode(self.Subject, self.charset)
-            msg['Subject'] = str(make_header([(subject, self.charset)]))
-        msg['From'] = self.From
+            msg["Subject"] = str(make_header([(subject, self.charset)]))
+        msg["From"] = self.From
         if isinstance(self.To, basestring):
-            msg['To'] = self.To
+            msg["To"] = self.To
         else:
             self.To = list(self.To)
-            msg['To'] = ", ".join(self.To)
+            msg["To"] = ", ".join(self.To)
 
     def _multipart(self):
         """The email has attachments"""
 
-        msg = MIMEMultipart('related')
+        msg = MIMEMultipart("related")
 
         if self.Html:
-            outer = MIMEMultipart('alternative')
-            
-            part1 = MIMEText(self.Body, 'plain', self.charset)
-            part1.add_header('Content-Disposition', 'inline')
+            outer = MIMEMultipart("alternative")
 
-            part2 = MIMEText(self.Html, 'html', self.charset)
-            part2.add_header('Content-Disposition', 'inline')
+            part1 = MIMEText(self.Body, "plain", self.charset)
+            part1.add_header("Content-Disposition", "inline")
+
+            part2 = MIMEText(self.Html, "html", self.charset)
+            part2.add_header("Content-Disposition", "inline")
 
             outer.attach(part1)
             outer.attach(part2)
             msg.attach(outer)
         else:
-            msg.attach(MIMEText(self.Body, 'plain', self.charset))
+            msg.attach(MIMEText(self.Body, "plain", self.charset))
 
         self._set_info(msg)
         msg.preamble = self.Subject
@@ -233,15 +244,15 @@ class Message(object):
         if ctype is None or encoding is not None:
             # No guess could be made, or the file is encoded (compressed), so
             # use a generic bag-of-bits type.
-            ctype = 'application/octet-stream'
-        maintype, subtype = ctype.split('/', 1)
-        fp = open(filename, 'rb')
-        if maintype == 'text':
+            ctype = "application/octet-stream"
+        maintype, subtype = ctype.split("/", 1)
+        fp = open(filename, "rb")
+        if maintype == "text":
             # Note: we should handle calculating the charset
             msg = MIMEText(fp.read(), _subtype=subtype)
-        elif maintype == 'image':
+        elif maintype == "image":
             msg = MIMEImage(fp.read(), _subtype=subtype)
-        elif maintype == 'audio':
+        elif maintype == "audio":
             msg = MIMEAudio(fp.read(), _subtype=subtype)
         else:
             msg = MIMEBase(maintype, subtype)
@@ -252,11 +263,13 @@ class Message(object):
 
         # Set the content-ID header
         if cid:
-            msg.add_header('Content-ID', '<%s>' % cid)
-            msg.add_header('Content-Disposition', 'inline')
+            msg.add_header("Content-ID", "<%s>" % cid)
+            msg.add_header("Content-Disposition", "inline")
         else:
             # Set the filename parameter
-            msg.add_header('Content-Disposition', 'attachment', filename=path.basename(filename))
+            msg.add_header(
+                "Content-Disposition", "attachment", filename=path.basename(filename)
+            )
         outer.attach(msg)
 
     def attach(self, filename, cid=None):
@@ -264,5 +277,5 @@ class Message(object):
         Attach a file to the email. Specify the name of the file;
         Message will figure out the MIME type and load the file.
         """
-        
+
         self.attachments.append((filename, cid))
