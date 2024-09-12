@@ -20,15 +20,16 @@ along with Galaxy Harvester.  If not, see <http://www.gnu.org/licenses/>.
 
 """
 
-import os
 import cgi
-from http import cookies
-import dbSession
-import ghShared
-import ghLists
-import dbShared
+import os
 import time
 from datetime import datetime
+from http import cookies
+
+import dbSession
+import dbShared
+import ghLists
+import ghShared
 from jinja2 import Environment, FileSystemLoader
 
 
@@ -175,7 +176,7 @@ def main():
             sharedInventory = dbShared.getUserAttr(uid, "sharedInventory")
             sharedRecipes = dbShared.getUserAttr(uid, "sharedRecipes")
 
-            donateTotal = dbShared.getUserDonated(uid)
+            donateTotal = 0.0
             userTitle = dbShared.getUserTitle(uid)
             userStats = dbShared.getUserStats(uid, galaxy).split(",")
             resScore = int(userStats[0])

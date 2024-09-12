@@ -1,5 +1,0 @@
-Factory Calculator
-
-<p>Just a quick note to let everyone know a factory run calculator has been added to the Recipe page.  Get those factories running!</p>
-
-<p>-ioscode</p>

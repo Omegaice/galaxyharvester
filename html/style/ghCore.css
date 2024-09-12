@@ -709,14 +709,7 @@ a div.resTreeItem {
 	border-radius: 4px;
 }
 
-ul.feedback {
-	margin-left: 8px;
-}
-.feedbackBox {
-	font-size: 12px;
-	border-bottom-style: solid;
-	border-bottom-width: 1px;
-}
+
 div.comments {
 	margin-left: 16px;
 	margin-top: 12px;
@@ -725,12 +718,7 @@ div.comments {
 	font-size: 16px;
 	margin-top: 12px;
 }
-.feedbackItem {
-	font-size: 18px;
-}
-ul.feedback li {
-	padding-top: 16px;
-}
+
 .rankBox {
 	font-size: 19px;
 	text-align: center;

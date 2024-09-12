@@ -93,46 +93,9 @@
 {% endif %}
 {% endmacro %}
 
-{% macro pageTracker() %}
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-8756142-3"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'UA-8756142-3');
-  </script>
-{% endmacro %}
-
-{% macro donateTracker(totalAmt, percentOfGoal) %}
-	<div id="donateTracker" style="position:relative;width:96px;" class="inlineBlock">
-	{% if (percentOfGoal) >= 1 %}
-	      <img src="/images/harvesterCapacity.png" alt="donations background" title="Total amount of donations received this month."/>
-	{% else %}
-		<img src="/images/harvesterIntegrity.png" alt="donations background" title="Total amount of donations received this month." />
-	{% endif %}
-      <div style="font-size:14px;font-weight:bold;color:white;position:absolute;top:40px;left:0px;width:100%;text-align:center;" title="Total amount of donations received this month.">${{ totalAmt }}</div>
-    </div>
-    <div class="inlineBlock" style="width:148px;"><p class="textOnBackground">
-{% if (percentOfGoal) >= 1 %}
-    <span>Donation goal for this month reached!</span>
-{% else %}
-    <span>Donation goal of $33 for this month not reached.</span>
-{% endif %}
-    </p>
-    <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-    <input type="hidden" name="cmd" value="_s-xclick">
-    <input type="hidden" name="hosted_button_id" value="SYAMQZWZU3MHS">
-    <input type="image" src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!" title="Your donation helps to pay for site hosting, design, and development.">
-    <img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
-    </form>
-    </div>
-{% endmacro %}
-
 {% macro pageFooter() %}
 	<div class="footer">
-	<a href="{{ BASE_SCRIPT_URL }}" title="Galaxy Harvester home page">Home</a> | <a href="{{ BASE_SCRIPT_URL }}help.py" title="Get more information about the Galaxy Harvester project and contributors">About</a> | <a href="https://github.com/pwillworth/galaxyharvester" title="Open Source Code for Galaxy Harvester Application">Source</a> | <a href="#" onclick="contactMessage();">Contact</a> | <a href="{{ BASE_SCRIPT_URL }}help.py" title="Get help using this site">Help</a> | <a href="{{ BASE_SCRIPT_URL }}feedback.py" title="Submit and rate on suggestions for the site.">Suggestions</a> | <a href="{{ BASE_SCRIPT_URL }}privacy.html" title="View the privacy policy for the site.">Privacy</a>
+	<a href="{{ BASE_SCRIPT_URL }}" title="Galaxy Harvester home page">Home</a> | <a href="{{ BASE_SCRIPT_URL }}help.py" title="Get more information about the Galaxy Harvester project and contributors">About</a> | <a href="https://github.com/pwillworth/galaxyharvester" title="Open Source Code for Galaxy Harvester Application">Source</a> | <a href="#" onclick="contactMessage();">Contact</a> | <a href="{{ BASE_SCRIPT_URL }}help.py" title="Get help using this site">Help</a> | <a href="{{ BASE_SCRIPT_URL }}privacy.html" title="View the privacy policy for the site.">Privacy</a>
 	<p style="padding: 4px;font-weight:normal;">Galaxy Harvester is a tool for tracking resources spawning in galaxies of the MMO game Star Wars Galaxies Emulator.  Serving the SWGEmu Community Since 2010.</p>
 	</div>
 {% endmacro %}

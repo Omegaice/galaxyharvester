@@ -20,7 +20,6 @@ $(document).ready(function() {
       refreshSurveying();
       refreshHarvesting();
 {% endif %}
-    $("#newsList").load("/blog.py/smy");
     $("#topCurrentCount").load(BASE_SCRIPT_URL + "ghStats.py",{statID:"currentSpawns",galaxy:$("#galaxySel").val()});
     $("#harvesterDataC").load(BASE_SCRIPT_URL + "getHarvesterData.py",{period:"current",galaxy:$("#galaxySel").val()},function(){$("#addBusyImgTHC").css("display","none");});
     $("#topAllCount").load(BASE_SCRIPT_URL + "ghStats.py",{statID:"totalSpawns",galaxy:$("#galaxySel").val()});
@@ -78,7 +77,7 @@ function refreshHarvesting() {
   });
 }
 </script>
-{{ blocks.pageTracker() }}
+
 </head>
 <body>
 {{ blocks.headerSection(loggedin, currentUser, loginResult, linkappend, url, imgNum, galaxyList, pictureName) }}
@@ -112,9 +111,6 @@ function refreshHarvesting() {
     <h4 class="sectionHead">All Time (<span id="topAllCount">?</span>)</h4>
     <div id="harvesterData"></div>
     <div id=addBusyImgTH class="lds-ripple"><div></div><div></div></div>
-    </div>
-    <div id="donateBox" class="ghOrphanBox" style="text-align:center;">
-{{ blocks.donateTracker(totalAmt,percentOfGoal) }}
     </div>
     <div id="newWaypoints" class="ghWidgetBox">
       <div class="boxHeader">New Waypoints [<a href="{{ BASE_SCRIPT_URL }}waypointMaps.py">Maps</a>]
@@ -181,10 +177,6 @@ function refreshHarvesting() {
 	    <div id="quickAddMask"></div>
 {% endif %}
     </div>
-    <div id="recentNews" class="ghWidgetBox">
-      <div class="boxHeader">Latest News from the <a href="/blog.py">GH Blog</a></div>
-      <div id="newsList"></div>
-    </div>
     <div id="otherLinks" class="ghWidgetBox">
     <div class="boxHeader">Other Links</div>
     <ul class="plain">
@@ -192,7 +184,6 @@ function refreshHarvesting() {
       <li><a href="{{ BASE_SCRIPT_URL }}schematics.py/home?{{ linkappend }}" title="Browse crafting schematics and their resource requirements.">Schematics</a></li>
       <li><a href="{{ BASE_SCRIPT_URL }}surveyList.py?{{ linkappend }}" title="Verify current resource spawns by survey tool.">Survey Tool</a></li>
       <li><a href="{{ BASE_SCRIPT_URL }}creatureList.py?{{ linkappend }}" title="View creature harvest yields by resource groups/types.">Creature Harvesting</a></li>
-      <li><a href="{{ BASE_SCRIPT_URL }}blog.py?{{ linkappend }}">News</a></li>
       <li><a href="{{ BASE_SCRIPT_URL }}feeds.py?{{ linkappend }}" title="List of RSS feeds you can subscribe to">Feeds</a></li>
       <li><a href="{{ BASE_SCRIPT_URL }}help.py?{{ linkappend }}">Help</a></li>
 {% if loggedin == 1 %}

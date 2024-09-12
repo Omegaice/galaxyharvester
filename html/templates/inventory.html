@@ -140,7 +140,7 @@ function exportInventory(format) {
     document.getElementById("download_frame").src = BASE_SCRIPT_URL + "getUserResources.py?formatType=" + format + "&galaxy=" + $("#galaxySel").val() + "&uid={{ uid }}&{{ linkappend }}";
 }
 </script>
-{{ blocks.pageTracker() }}
+
 <body>
 {{ blocks.headerSection(loggedin, currentUser, loginResult, linkappend, url, imgNum, galaxyList, pictureName) }}
 

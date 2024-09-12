@@ -20,17 +20,20 @@ along with Galaxy Harvester.  If not, see <http://www.gnu.org/licenses/>.
 
 """
 
-import pymysql
 import sys
 import time
 from datetime import datetime
 
+import pymysql
+
 sys.path.append("../")
-import dbInfo
-import ghObjects
-import ghNames
-import ghShared
 import difflib
+
+import ghNames
+import ghObjects
+import ghShared
+
+import dbInfo
 
 
 def ghConn():
@@ -463,26 +466,6 @@ def getUserAttr(user, attr):
     cursor.close()
     conn.close()
     return retAttr
-
-
-# Returns total amount user has donated to the site
-def getUserDonated(user):
-    conn = ghConn()
-    cursor = conn.cursor()
-    cursor.execute(
-        "SELECT Sum(paymentGross) FROM tPayments WHERE payerEmail = (SELECT emailAddress FROM tUsers WHERE userID=%s)",
-        [user],
-    )
-    row = cursor.fetchone()
-    if row != None and row[0] != None:
-        retAttr = str(row[0])
-    else:
-        retAttr = ""
-
-    cursor.close()
-    conn.close()
-    return retAttr
-
 
 # Returns honor badge title for user based on stats
 def getUserTitle(user):

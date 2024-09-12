@@ -20,13 +20,14 @@ along with Galaxy Harvester.  If not, see <http://www.gnu.org/licenses/>.
 
 """
 
-import os
 import cgi
+import os
 from http import cookies
+
 import dbSession
-import ghShared
-import ghLists
 import dbShared
+import ghLists
+import ghShared
 from jinja2 import Environment, FileSystemLoader
 
 # Get current url
@@ -107,16 +108,7 @@ if len(path) > 0 and path[0].isdigit():
     C["galaxy"]["path"] = "/"
     print(C)
 
-totalAmt = 0.00
 conn = dbShared.ghConn()
-cursor = conn.cursor()
-if cursor:
-    sqlStr = "SELECT Sum(paymentGross) AS totalAmt FROM tPayments WHERE YEAR(completedDate)=YEAR(NOW()) AND MONTH(completedDate)=MONTH(NOW());"
-    cursor.execute(sqlStr)
-    row = cursor.fetchone()
-    if row[0] != None:
-        totalAmt = float(row[0])
-cursor.close()
 
 adminList = dbShared.getGalaxyAdminList(conn, currentUser).split("/option")[0]
 if len(adminList) > 0:
@@ -125,8 +117,6 @@ else:
     galaxyAdmin = 0
 conn.close()
 
-percentOfGoal = totalAmt / 33
-totalAmt = str(int(totalAmt))
 pictureName = dbShared.getUserAttr(currentUser, "pictureName")
 print("Content-type: text/html\n")
 env = Environment(loader=FileSystemLoader("templates"))
@@ -150,7 +140,6 @@ print(
         linkappend=linkappend,
         url=url,
         pictureName=pictureName,
-        totalAmt=totalAmt,
         percentOfGoal=percentOfGoal,
         imgNum=ghShared.imgNum,
         resourceGroupListShort=ghLists.getResourceGroupListShort(),

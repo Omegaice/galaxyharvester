@@ -1600,68 +1600,6 @@ function clearAlerts(alertType) {
     }
 }
 
-/*      Feedback stuff         */
-
-function loadFeedback() {
-	var sortType = "rank"
-	if ($("#oTime").attr("checked") == "checked") {
-		sortType = "time";
-	}
-	$("#feedbackList").load(BASE_SCRIPT_URL + "getFeedback.py",{
-		sort: sortType,
-		perPage: "10"},
-		function() {
-			$("#feedbackBusyImg").css("display","none");
-		});
-	return false;
-}
-
-function voteFeedback(linkFrom, feedbackID, vote) {
-	$.post(BASE_SCRIPT_URL + "postFeedback.py",{ itemID: feedbackID, voteValue: vote },
-		function(data) {
-			if (data.substr(0,5) == "Error") {
-				alert(data);
-			} else {
-				if (vote > 0) {
-					$(linkFrom).html($(linkFrom).html().replace('Grey','Green'));
-				} else if (vote < 0) {
-					$(linkFrom).html($(linkFrom).html().replace('Grey','Red'));
-				} else {
-					$(linkFrom).html($(linkFrom).html().replace('Red','Grey').replace('Green','Grey'));
-				}
-			}
-		}, "html");
-}
-
-function moreFeedback(lastVal) {
-	var sortType = "rank"
-	if ($("#oTime").attr("checked") == "checked") {
-		sortType = "time";
-	}
-	$.get("getFeedback.py",{sort:sortType, perPage:"10", lastItem: lastVal},
-		function(data) {
-		$("#moreButton").remove();
-		$("#feedbackList").append(data);
-	}, "html");
-}
-
-function postFeedback(feedbackID, feedbackText) {
-	if (true) {
-		$('#busyImgAdd').css('display','block');
-		$("#addInfo").html('');
-		$.post(BASE_SCRIPT_URL + "postFeedback.py", { itemID: feedbackID, suggestion: $("#feedbackText").val() },
-			function(data) {
-				var result = $(data).find('resultText').eq(0).text();
-				var newID = $(data).find("feedbackID").eq(0).text();
-				$("#addInfo").html(result);
-				$('#busyImgAdd').css('display','none');
-				$("#mask, .window").hide(3000);
-				loadFeedback();
-			}, "xml");
-	}
-	return true;
-}
-
 /*      Resource Type Stuff     */
 // Present blank form for adding a new creature data
 function addCreature(resourceType) {
