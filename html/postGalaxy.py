@@ -22,9 +22,7 @@ along with Galaxy Harvester.  If not, see <http://www.gnu.org/licenses/>.
 
 import cgi
 import os
-import smtplib
 import sys
-from email.message import EmailMessage
 from http import cookies
 from xml.dom import minidom
 
@@ -32,7 +30,6 @@ import dbSession
 import dbShared
 
 sys.path.append("../")
-import mailInfo
 
 #
 # Get current url
@@ -98,33 +95,6 @@ if sess != "":
     logged_state = 1
     currentUser = sess
 
-
-def sendGalaxyNotifyMail(galaxyID, galaxyName, user):
-    # send message
-    message = EmailMessage()
-    message["From"] = mailInfo.MAIL_FROM
-    message["To"] = "galaxyharvester@gmail.com"
-    message["Subject"] = "New Galaxy Submitted For Review"
-    link = "http://galaxyharvester.net/galaxy.py/{0}".format(galaxyID)
-    message.set_content(user + " has submitted a new galaxy for review.\n\n" + link)
-    message.add_alternative(
-        "<div><img src='http://galaxyharvester.net/images/ghLogoLarge.png'/></div><p>"
-        + user
-        + " has submitted a new galaxy for review.</p><p><a style='text-decoration:none;' href='"
-        + link
-        + "'><div style='width:170px;font-size:18px;font-weight:600;color:#feffa1;background-color:#003344;padding:8px;margin:4px;border:1px solid black;'>Click Here To Review</div></a><br/>or copy and paste link: "
-        + link
-        + "</p>",
-        subtype="html",
-    )
-    mailer = smtplib.SMTP(mailInfo.MAIL_HOST, port=587, timeout=5)
-    mailer.starttls()
-    mailer.login(mailInfo.MAIL_USER, mailInfo.MAIL_PASS)
-    mailer.send_message(message)
-    mailer.quit()
-    return "email sent"
-
-
 def addGalaxy(
     galaxyName, galaxyNGE, galaxyWebsite, galaxyPlanets, userID, galaxyAdmins
 ):
@@ -164,7 +134,6 @@ def addGalaxy(
             result = result + cursor.rowcount
 
     if returnStr.find("Error:") == -1 and result > 0:
-        sendGalaxyNotifyMail(galaxyID, galaxyName, userID)
         returnStr = "Galaxy submitted for review."
     cursor.close()
     conn.close()
