@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en"><head><title>Waypoint Maps - Galaxy Harvester</title>
 {{ blocks.commonResources(uiTheme) }}
-<script src="/static/js/Colors.js"></script>
+<script src="/js/Colors.js"></script>
 <script type="text/javascript">
 var mapPlanet = "Corellia";
 $(document).ready(function() {
@@ -126,7 +126,7 @@ function loadPlanetButtons(galaxy) {
       for (var i=0;i<$(planetIds).find('item').length;i++) {
           var planetName = $(planetNames).find('item').eq(i).text();
           var planetShort = planetName.replace(' ', '');
-          var planetButton = $('<div id="btn' + planetShort + '" class="planetButton inlineBlock"><img src="/static/images/planets/icon' + planetShort + '.png" title="' + planetName + '" alt="' + planetName + '" /><br />' + planetName + '</div>');
+          var planetButton = $('<div id="btn' + planetShort + '" class="planetButton inlineBlock"><img src="/images/planets/icon' + planetShort + '.png" title="' + planetName + '" alt="' + planetName + '" /><br />' + planetName + '</div>');
           $(planetButton).click(function(e) {
               updateMap(this);
           });

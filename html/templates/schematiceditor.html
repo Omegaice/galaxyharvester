@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en"><head><title>Schematic Editor - Galaxy Harvester</title>
 {{ blocks.commonResources(uiTheme) }}
-<script src="/static/js/jquery-ui-1.8.20.custom.min.js"></script>
+<script src="/js/jquery-ui-1.8.20.custom.min.js"></script>
 <script type="text/javascript">
 var quickAddGroups = {};
 quickAddGroups['architectExtraction'] = 'HR:25:1,SR:25:1,UT:50:2';
@@ -68,7 +68,7 @@ function transmuteIngredient(ingredientObject) {
 function addSchematicIngredient(objectID, objectName, imagePath) {
   // Add new ingredient row
   $('#ingredientTable').append('							<tr class="ingredientRow" tag="' + objectID + '">'+
-                  '<td><img src="/static/images/xRed16.png" alt="Remove Ingredient" title="Remove Ingredient" style="cursor:pointer;" onclick="$(this).parent().parent().remove();"/></td>'+
+                  '<td><img src="/images/xRed16.png" alt="Remove Ingredient" title="Remove Ingredient" style="cursor:pointer;" onclick="$(this).parent().parent().remove();"/></td>'+
                   '<td><input type="text" name="ing_name" value=""  /></td>'+
                   '<td style="padding-right:4px;"><input type="text" name="ing_qty" size="5" maxlength="7" value="" /></td>'+
                   '<td><input type="checkbox" name="ing_req" checked="checked" /></td>' +
@@ -124,7 +124,7 @@ function refreshSkillGroups(selValue) {
   })
 }
 function newExpGroup(groupName) {
-  $('#qualitiesList').append('<div class="expQualityGroup"><img src="/static/images/xRed16.png" alt="Remove Group" title="Remove Group" style="cursor:pointer;" onclick="$(this).parent().remove();"/><input type="text" name="qualityGroupName" value="' + groupName + '" /></div>')
+  $('#qualitiesList').append('<div class="expQualityGroup"><img src="/images/xRed16.png" alt="Remove Group" title="Remove Group" style="cursor:pointer;" onclick="$(this).parent().remove();"/><input type="text" name="qualityGroupName" value="' + groupName + '" /></div>')
 }
 function addExpQuality(quickAddType) {
   if ($('.expQualityGroup').length < 1) {
@@ -134,7 +134,7 @@ function addExpQuality(quickAddType) {
   quickAddStats = quickAddGroups[quickAddType].split(',');
   tmpID = new Date().getTime();
   groupStr = '<div class="expQuality" style="padding-left:20px;font-weight:bold;">'
-             + '<img src="/static/images/xRed16.png" alt="Remove Exp. Quality" title="Remove Exp. Quality" style="cursor:pointer;" onclick="$(this).parent().remove();"/>'
+             + '<img src="/images/xRed16.png" alt="Remove Exp. Quality" title="Remove Exp. Quality" style="cursor:pointer;" onclick="$(this).parent().remove();"/>'
              + '<input type="text" name="expQualityName" value="' + quickAddType + '" />';
   for (i = 0; i < quickAddStats.length; i++) {
     statInfo = quickAddStats[i].split(':');
@@ -301,7 +301,7 @@ function saveSchematic() {
               <tr><th></th><th>Ingredient Name</th><th title="Quantity - Resource amount or number of components.">Qty.</th><th title="Is ingredient required?">Req?</th><th></th></tr>
 					{% for ingredient in schematic.ingredients %}
 							<tr class="ingredientRow" tag="{{ ingredient.ingredientObject }}">
-                <td><img src="/static/images/xRed16.png" alt="Remove Ingredient" title="Remove Ingredient" style="cursor:pointer;" onclick="$(this).parent().parent().remove();"/></td>
+                <td><img src="/images/xRed16.png" alt="Remove Ingredient" title="Remove Ingredient" style="cursor:pointer;" onclick="$(this).parent().parent().remove();"/></td>
                 <td><input type="text" name="ing_name" value="{{ ingredient.ingredientName }}"  /></td>
                 <td style="padding-right:4px;"><input type="text" name="ing_qty" size="5" maxlength="7" value="{{ ingredient.ingredientQuantity }}" /></td>
               {% if ingredient.ingredientType > 2 %}
@@ -341,10 +341,10 @@ function saveSchematic() {
             </select></td><td><button type=button value="Add" class="ghButton" onclick="addExpQuality($('#qualityAddSel').val());">Add</button></td></tr></table>
             <ul id="qualitiesList" style="margin-top:6px;">
 					{% for qualityGroup in schematic.qualityGroups %}
-							<div class="expQualityGroup"><img src="/static/images/xRed16.png" alt="Remove Group" title="Remove Group" style="cursor:pointer;" onclick="$(this).parent().remove();"/><input type="text" name="qualityGroupName" value="{{ qualityGroup.groupName() }}" />
+							<div class="expQualityGroup"><img src="/images/xRed16.png" alt="Remove Group" title="Remove Group" style="cursor:pointer;" onclick="$(this).parent().remove();"/><input type="text" name="qualityGroupName" value="{{ qualityGroup.groupName() }}" />
 							{% for expProp in qualityGroup.properties %}
 									<div class="expQuality" style="padding-left:20px;font-weight:bold;">
-                    <img src="/static/images/xRed16.png" alt="Remove Exp. Quality" title="Remove Exp. Quality" style="cursor:pointer;" onclick="$(this).parent().remove();"/>
+                    <img src="/images/xRed16.png" alt="Remove Exp. Quality" title="Remove Exp. Quality" style="cursor:pointer;" onclick="$(this).parent().remove();"/>
                     <input type="text" name="expQualityName" value="{{ expProp.propertyName() }}" />
 									{% for statWeight in expProp.statWeights %}
 										<li class="qualityStat" style="padding-left:40px;" tag="{{ statWeight.qualityID }}"><span class="inlineBlock" style="width:120px;">
@@ -375,7 +375,7 @@ function saveSchematic() {
 						  <tr><td>XP: </td><td><input type="text" id="xpAmount" name="xpAmount" size="4" maxlength="5" value="{{ schematic.xpAmount }}" /></td></tr>
 						  <tr><td>Complexity: </td><td><input type="text" id="complexity" name="complexity" size="4" maxlength="5" value="{{ schematic.complexity }}" /></td></tr>
             </table>
-            <img src="/static/images/schematics/{{ schematic.schematicImage }}" class="schematics" />
+            <img src="/images/schematics/{{ schematic.schematicImage }}" class="schematics" />
   					<div id="udInfo">{{ schemImageAttempt }}</div>
             <form enctype="multipart/form-data" name="udImageForm" method="post" action="{{ BASE_SCRIPT_URL }}udSchematicImage.py">
             <div class="inlineBlock" style="width:120px;font-weight:bold;">Add Image</div><div class="inlineBlock" style="text-align:right;">Use image from another schematic: <input type="checkbox" name="useExisting" id="useExisting" onclick="switchImageInput();" /></div>

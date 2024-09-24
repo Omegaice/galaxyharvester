@@ -140,7 +140,6 @@ print(
         linkappend=linkappend,
         url=url,
         pictureName=pictureName,
-        percentOfGoal=percentOfGoal,
         imgNum=ghShared.imgNum,
         resourceGroupListShort=ghLists.getResourceGroupListShort(),
         professionList=ghLists.getProfessionList(galaxy),
