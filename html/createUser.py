@@ -42,9 +42,7 @@ import mailInfo
 def sendVerificationMail(user, address, code):
     # send message
     message = EmailMessage()
-    message["From"] = '"Galaxy Harvester Activation" <{0}>'.format(
-        mailInfo.REGMAIL_USER
-    )
+    message["From"] = mailInfo.MAIL_FROM
     message["To"] = address
     message["Subject"] = "Galaxy Harvester Account Verification"
     link = "{0}/verifyUser.py?vc={1}".format(ghShared.BASE_WEB_DOMAIN, code)
@@ -67,8 +65,9 @@ def sendVerificationMail(user, address, code):
         + "</p><br/><p>Thanks,</p><p>-Galaxy Harvester Administrator</p>",
         subtype="html",
     )
-    mailer = smtplib.SMTP(mailInfo.MAIL_HOST)
-    mailer.login(mailInfo.REGMAIL_USER, mailInfo.MAIL_PASS)
+    mailer = smtplib.SMTP(mailInfo.MAIL_HOST, port=587, timeout=5)
+    mailer.starttls()
+    mailer.login(mailInfo.MAIL_USER, mailInfo.MAIL_PASS)
     mailer.send_message(message)
     mailer.quit()
     return "email sent"

@@ -20,20 +20,20 @@ along with Galaxy Harvester.  If not, see <http://www.gnu.org/licenses/>.
 
 """
 
-import sys
 import cgi
 import hashlib
 import smtplib
+import string
+import sys
 from email.message import EmailMessage
+from random import *
+
 import dbShared
 import ghShared
-from random import *
-import string
 
 sys.path.append("../")
 import dbInfo
 import mailInfo
-
 
 form = cgi.FieldStorage()
 # Get Cookies
@@ -72,7 +72,7 @@ else:
 
         if lastReset == None or ghShared.timeAgo(lastReset).find("minute") == -1:
             message = EmailMessage()
-            message["From"] = "reset@galaxyharvester.net"
+            message["From"] = mailInfo.MAIL_FROM
             message["To"] = email
             message["Subject"] = "Galaxy Harvester password reset"
             message.set_content(
@@ -82,8 +82,9 @@ else:
                 + newPass
                 + "\n\n go to https://galaxyharvester.net to login.\n"
             )
-            mailer = smtplib.SMTP(mailInfo.MAIL_HOST)
-            mailer.login("reset@galaxyharvester.net", mailInfo.MAIL_PASS)
+            mailer = smtplib.SMTP(mailInfo.MAIL_HOST, port=587, timeout=5)
+            mailer.starttls()
+            mailer.login(mailInfo.MAIL_USER, mailInfo.MAIL_PASS)
             mailer.send_message(message)
             mailer.quit()
             cursor.execute(

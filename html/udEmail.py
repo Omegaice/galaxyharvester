@@ -20,16 +20,17 @@ along with Galaxy Harvester.  If not, see <http://www.gnu.org/licenses/>.
 
 """
 
+import cgi
 import os
+import smtplib
 import sys
 import uuid
-import cgi
+from email.message import EmailMessage
 from http import cookies
+from smtplib import SMTPRecipientsRefused
+
 import dbSession
 import dbShared
-import smtplib
-from email.message import EmailMessage
-from smtplib import SMTPRecipientsRefused
 
 sys.path.append("../")
 import mailInfo
@@ -38,9 +39,7 @@ import mailInfo
 def sendVerificationMail(user, address, code):
     # send message
     message = EmailMessage()
-    message["From"] = (
-        '"Galaxy Harvester Registration" <registration@galaxyharvester.net>'
-    )
+    message["From"] = mailInfo.MAIL_FROM
     message["To"] = address
     message["Subject"] = "Galaxy Harvester Email Change Verification"
     link = "http://galaxyharvester.net/verifyUser.py?vc={0}&vt=mail".format(code)
@@ -61,8 +60,9 @@ def sendVerificationMail(user, address, code):
         + "</p><br/><p>Thanks,</p><p>-Galaxy Harvester Administrator</p>",
         subtype="html",
     )
-    mailer = smtplib.SMTP(mailInfo.MAIL_HOST)
-    mailer.login(mailInfo.REGMAIL_USER, mailInfo.MAIL_PASS)
+    mailer = smtplib.SMTP(mailInfo.MAIL_HOST, port=587, timeout=5)
+    mailer.starttls()
+    mailer.login(mailInfo.MAIL_USER, mailInfo.MAIL_PASS)
     try:
         mailer.send_message(message)
         mailer.quit()

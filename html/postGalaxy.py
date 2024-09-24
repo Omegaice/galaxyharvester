@@ -20,15 +20,16 @@ along with Galaxy Harvester.  If not, see <http://www.gnu.org/licenses/>.
 
 """
 
+import cgi
 import os
+import smtplib
 import sys
+from email.message import EmailMessage
 from http import cookies
+from xml.dom import minidom
+
 import dbSession
 import dbShared
-import cgi
-import smtplib
-from email.message import EmailMessage
-from xml.dom import minidom
 
 sys.path.append("../")
 import mailInfo
@@ -101,7 +102,7 @@ if sess != "":
 def sendGalaxyNotifyMail(galaxyID, galaxyName, user):
     # send message
     message = EmailMessage()
-    message["From"] = '"Galaxy Harvester Registration" <admin@galaxyharvester.net>'
+    message["From"] = mailInfo.MAIL_FROM
     message["To"] = "galaxyharvester@gmail.com"
     message["Subject"] = "New Galaxy Submitted For Review"
     link = "http://galaxyharvester.net/galaxy.py/{0}".format(galaxyID)
@@ -116,7 +117,8 @@ def sendGalaxyNotifyMail(galaxyID, galaxyName, user):
         + "</p>",
         subtype="html",
     )
-    mailer = smtplib.SMTP(mailInfo.MAIL_HOST)
+    mailer = smtplib.SMTP(mailInfo.MAIL_HOST, port=587, timeout=5)
+    mailer.starttls()
     mailer.login(mailInfo.MAIL_USER, mailInfo.MAIL_PASS)
     mailer.send_message(message)
     mailer.quit()

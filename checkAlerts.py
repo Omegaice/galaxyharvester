@@ -20,21 +20,23 @@ along with Galaxy Harvester.  If not, see <http://www.gnu.org/licenses/>.
 
 """
 
-import sys
-import pymysql
-import dbInfo
 import smtplib
+import sys
+import time
+from datetime import datetime, timedelta
 from email.message import EmailMessage
 from smtplib import SMTPRecipientsRefused
-import time
-from datetime import timedelta, datetime
+
+import pymysql
+
+import dbInfo
 import mailInfo
 
 sys.path.append("galaxyharvester.net")
 sys.path.append("html")
+import dbShared
 import ghNames
 import serverBest
-import dbShared
 
 
 def ghConn():
@@ -146,7 +148,7 @@ def sendAlertMail(conn, userID, msgText, link, alertID, alertTitle):
         if email.find("@") > -1:
             # send message
             message = EmailMessage()
-            message["From"] = mailInfo.ALERTMAIL_USER
+            message["From"] = mailInfo.MAIL_FROM
             message["To"] = email
             message["Subject"] = "".join(("Galaxy Harvester ", alertTitle))
             message.set_content(
@@ -178,8 +180,9 @@ def sendAlertMail(conn, userID, msgText, link, alertID, alertTitle):
                 ),
                 subtype="html",
             )
-            mailer = smtplib.SMTP(mailInfo.MAIL_HOST)
-            mailer.login(mailInfo.ALERTMAIL_USER, mailInfo.MAIL_PASS)
+            mailer = smtplib.SMTP(mailInfo.MAIL_HOST, port=587, timeout=5)
+            mailer.starttls()
+            mailer.login(mailInfo.MAIL_USER, mailInfo.MAIL_PASS)
             try:
                 mailer.send_message(message)
                 result = "email sent"
