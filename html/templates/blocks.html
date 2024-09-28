@@ -131,7 +131,7 @@
 	<script>
 		function onJoinSubmit(token) {
 			$("#joinWait").css("display","block");
-			document.getElementById("createuform").submit();
+			document.getElementById("createuform").submit(); 
 		}
 	</script>
  
@@ -152,6 +152,9 @@
 	    <td><input type="password" name="verifypass" tabindex="13" size="12" maxlength="16" onchange="valVpass(&quot;userpass&quot;,this)" /></td>
         <td><span id="vpassInf" class="formMsg">Passwords do not match.</span></td></tr>
 	    </table>
+		<div style="text-align: center;padding: 20px;">
+			<button class="ghButton" data-callback='onJoinSubmit' data-action='submitJoin' tabindex="14">Create<img src="/images/ghWait.gif" id="joinWait" style="display:none;"/></button>
+		</div>
 		</form>
 		<div class="tip"><a href="/privacy.html" target="_blank">Privacy Policy</a>
 		</div>
